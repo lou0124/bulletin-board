@@ -1,17 +1,15 @@
 package personal.bulletinborad.entity;
 
 import jakarta.persistence.*;
-import lombok.NoArgsConstructor;
 import personal.bulletinborad.entity.mapedsuperclass.BaseTime;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static jakarta.persistence.FetchType.*;
-import static lombok.AccessLevel.*;
 
 @Entity
-@NoArgsConstructor(access = PROTECTED)
+//@NoArgsConstructor(access = PROTECTED)
 public class Post extends BaseTime {
 
     @Id @GeneratedValue
@@ -20,11 +18,10 @@ public class Post extends BaseTime {
 
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "user_id")
-    private User user;
+    private Member member;
 
     @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "category_id")
-    @Column(nullable = false)
+    @JoinColumn(name = "category_id", nullable = false)
     private Category category;
 
     @Column(nullable = false)

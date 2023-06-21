@@ -23,7 +23,7 @@ public class Comment extends BaseTime {
 
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "user_id", nullable = false)
-    private User user;
+    private Member member;
 
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "post_id", nullable = false)
