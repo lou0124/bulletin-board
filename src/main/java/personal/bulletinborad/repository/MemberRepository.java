@@ -6,9 +6,6 @@ import personal.bulletinborad.entity.Member;
 import java.util.Optional;
 
 public interface MemberRepository extends JpaRepository<Member, Long> {
-    Optional<Member> findByLoginId(String loginId);
 
-    Optional<Member> findByEmail(String email);
-
-    Optional<Member> findByNickname(String nickname);
+    Optional<Member> findByLoginIdOrEmailOrNickname(String loginId, String email, String nickname);
 }
