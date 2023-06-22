@@ -19,7 +19,6 @@ import static personal.bulletinborad.exception.ExceptionMessage.*;
 @Transactional
 class MemberServiceTest {
 
-
     @Autowired MemberRepository memberRepository;
     MemberService memberService;
 
