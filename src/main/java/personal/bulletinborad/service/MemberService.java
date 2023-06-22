@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import personal.bulletinborad.entity.Member;
 import personal.bulletinborad.exception.ExistMemberException;
-import personal.bulletinborad.infrastructure.repository.MemberRepository;
+import personal.bulletinborad.infrastructure.MemberRepository;
 
 import java.util.Optional;
 

@@ -6,7 +6,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 import personal.bulletinborad.entity.Member;
 import personal.bulletinborad.exception.ExistMemberException;
-import personal.bulletinborad.infrastructure.repository.MemberRepository;
+import personal.bulletinborad.infrastructure.MemberRepository;
 
 import static org.assertj.core.api.Assertions.*;
 import static personal.bulletinborad.exception.ExceptionMessage.*;

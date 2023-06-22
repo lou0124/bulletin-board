@@ -1,4 +1,4 @@
-package personal.bulletinborad.infrastructure.repository;
+package personal.bulletinborad.infrastructure;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import personal.bulletinborad.entity.Member;
