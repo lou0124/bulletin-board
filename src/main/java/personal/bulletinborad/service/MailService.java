@@ -16,29 +16,30 @@ import java.util.Random;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class EmailService {
+public class MailService {
 
     private final JavaMailSender javaMailSender;
-
-    private final String verificationCode = createKey();
 
     @Value("${spring.mail.username}")
     private String id;
 
-    public String sendSimpleMessage(String to) throws Exception {
-        MimeMessage message = createMessage(to);
+    public String sendMessage(String to) throws Exception {
+        String verificationCode = createKey();
+        MimeMessage message = createMessage(to, verificationCode);
+
         try {
             javaMailSender.send(message);
+            log.info("메일 전송 성공: {}", to);
         } catch(MailException e){
+            log.info("메일 전송 실패: {}", to);
             e.printStackTrace();
             throw new IllegalArgumentException(e);
         }
         return verificationCode;
     }
 
-    private MimeMessage createMessage(String to) throws MessagingException, UnsupportedEncodingException {
-        log.info("보내는 대상 : "+ to);
-        log.info("인증 번호 : " + verificationCode);
+    private MimeMessage createMessage(String to, String verificationCode) throws MessagingException, UnsupportedEncodingException {
+        log.info("보내는 대상: {}, 인증번호: {}", to, verificationCode);
         MimeMessage message = javaMailSender.createMimeMessage();
 
         message.addRecipients(MimeMessage.RecipientType.TO, to);

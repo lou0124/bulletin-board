@@ -5,13 +5,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class EmailServiceTest {
+class MailServiceTest {
 
-    @Autowired EmailService emailService;
+    @Autowired
+    MailService mailService;
 
     @Test
     void 메일_보내기() throws Exception {
-        String ePw = emailService.sendSimpleMessage("ohchangmin00@gmail.com");
+        String ePw = mailService.sendMessage("ohchangmin00@gmail.com");
         System.out.println("ePw = " + ePw);
     }
 }
