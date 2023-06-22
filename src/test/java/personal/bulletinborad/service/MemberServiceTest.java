@@ -1,12 +1,21 @@
 package personal.bulletinborad.service;
 
+import jakarta.annotation.PostConstruct;
+import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.transaction.annotation.Transactional;
 import personal.bulletinborad.entity.Member;
+import personal.bulletinborad.enumtype.Approval;
 import personal.bulletinborad.exception.ExistMemberException;
 import personal.bulletinborad.infrastructure.MemberRepository;
+import personal.bulletinborad.mock.FakeMailSender;
+import personal.bulletinborad.mock.FakeVerificationCodeRepository;
+
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.*;
 import static personal.bulletinborad.exception.ExceptionMessage.*;
@@ -15,17 +24,22 @@ import static personal.bulletinborad.exception.ExceptionMessage.*;
 @Transactional
 class MemberServiceTest {
 
-    @Autowired MemberService memberService;
+
     @Autowired MemberRepository memberRepository;
+    MemberService memberService;
+
+    String loginId = "apple";
+    String password = "1234";
+    String email = "apple@example.com";
+    String nickname = "banana";
+
+    @PostConstruct
+    void postConstruct() {
+        memberService = new MemberService(memberRepository, new FakeMailSender(), new FakeVerificationCodeRepository());
+    }
 
     @Test
     void join_수행_확인() {
-        //given
-        String loginId = "apple";
-        String password = "1234";
-        String email = "apple@example.com";
-        String nickname = "banana";
-
         //when
         Long memberId = memberService.join(loginId, password, email, nickname);
 
@@ -38,12 +52,7 @@ class MemberServiceTest {
     }
 
     @Test
-    void 이미_존재하는_로그인아이디_에러반환() {
-        //given
-        String loginId = "apple";
-        String password = "1234";
-        String email = "apple@example.com";
-        String nickname = "banana";
+    void 이미_존재하는_로그인아이디_에러반환() throws Exception {
         memberService.join(loginId, password, email, nickname);
 
         //when //then
@@ -53,12 +62,7 @@ class MemberServiceTest {
     }
 
     @Test
-    void 이미_존재하는_이메일_에러반환() {
-        //given
-        String loginId = "apple";
-        String password = "1234";
-        String email = "apple@example.com";
-        String nickname = "banana";
+    void 이미_존재하는_이메일_에러반환() throws Exception {
         memberService.join(loginId, password, email, nickname);
 
         //when //then
@@ -68,17 +72,28 @@ class MemberServiceTest {
     }
 
     @Test
-    void 이미_존재하는_닉네임_에러반환() {
-        //given
-        String loginId = "apple";
-        String password = "1234";
-        String email = "apple@example.com";
-        String nickname = "banana";
+    void 이미_존재하는_닉네임_에러반환() throws Exception {
         memberService.join(loginId, password, email, nickname);
 
         //when //then
         assertThatThrownBy(() -> memberService.join("loginId", "password", "email", nickname))
                 .isInstanceOf(ExistMemberException.class)
                 .hasMessage(EXIST_NICKNAME);
+    }
+
+    @Test
+    void join후_인증_성공() throws Exception {
+        Long memberId = memberService.join(loginId, password, email, nickname);
+        boolean verify = memberService.verify(memberId, FakeMailSender.SEND_MESSAGE);
+        Member member = memberRepository.findById(memberId).get();
+        assertThat(verify).isTrue();
+        assertThat(member.getApproval()).isEqualTo(Approval.COMPLETE);
+    }
+
+    @Test
+    void join후_인증_실패() throws Exception {
+        Long memberId = memberService.join(loginId, password, email, nickname);
+        boolean verify = memberService.verify(memberId, "xxxxxx");
+        assertThat(verify).isFalse();
     }
 }

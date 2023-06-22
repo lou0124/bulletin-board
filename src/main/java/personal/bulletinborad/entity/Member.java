@@ -47,4 +47,8 @@ public class Member extends BaseTime {
         this.approval = Approval.NONE;
         this.role = Role.COMMON;
     }
+
+    public void verify() {
+        approval = Approval.COMPLETE;
+    }
 }

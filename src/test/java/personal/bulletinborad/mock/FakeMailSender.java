@@ -7,8 +7,10 @@ import java.io.UnsupportedEncodingException;
 
 public class FakeMailSender implements VerificationMailSender {
 
+    public static final String SEND_MESSAGE = "123456";
+
     @Override
     public String send(String to) throws MessagingException, UnsupportedEncodingException {
-        return "123456";
+        return SEND_MESSAGE;
     }
 }
