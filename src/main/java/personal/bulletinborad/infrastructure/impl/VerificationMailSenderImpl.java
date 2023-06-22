@@ -63,7 +63,7 @@ public class VerificationMailSenderImpl implements VerificationMailSender {
         StringBuffer key = new StringBuffer();
         Random random = new Random();
 
-        for (int i = 0; i < 6; i++) { // 인증코드 6자리
+        for (int i = 0; i < 6; i++) {
             key.append((random.nextInt(10)));
         }
         return key.toString();
