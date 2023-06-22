@@ -1,12 +1,9 @@
 package personal.bulletinborad.service;
 
 import jakarta.annotation.PostConstruct;
-import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.transaction.annotation.Transactional;
 import personal.bulletinborad.entity.Member;
 import personal.bulletinborad.enumtype.Approval;
@@ -14,8 +11,6 @@ import personal.bulletinborad.exception.ExistMemberException;
 import personal.bulletinborad.infrastructure.MemberRepository;
 import personal.bulletinborad.mock.FakeMailSender;
 import personal.bulletinborad.mock.FakeVerificationCodeRepository;
-
-import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.*;
 import static personal.bulletinborad.exception.ExceptionMessage.*;
