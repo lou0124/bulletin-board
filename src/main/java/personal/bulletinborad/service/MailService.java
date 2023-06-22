@@ -6,11 +6,14 @@ import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.mail.MailException;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 import java.io.UnsupportedEncodingException;
+import java.time.Duration;
 import java.util.Random;
 
 @Slf4j
@@ -19,6 +22,7 @@ import java.util.Random;
 public class MailService {
 
     private final JavaMailSender javaMailSender;
+    private final RedisTemplate<String, String> redisTemplate;
 
     @Value("${spring.mail.username}")
     private String id;
@@ -29,6 +33,7 @@ public class MailService {
 
         try {
             javaMailSender.send(message);
+            storeVerificationCode(to, verificationCode, 60 * 5L);
             log.info("메일 전송 성공: {}", to);
         } catch(MailException e){
             log.info("메일 전송 실패: {}", to);
@@ -36,6 +41,12 @@ public class MailService {
             throw new IllegalArgumentException(e);
         }
         return verificationCode;
+    }
+
+    private void storeVerificationCode(String to, String verificationCode, Long duration) {
+        ValueOperations<String, String> valueOperations = redisTemplate.opsForValue();
+        Duration expireDuration = Duration.ofSeconds(duration);
+        valueOperations.set(to, verificationCode, expireDuration);
     }
 
     private MimeMessage createMessage(String to, String verificationCode) throws MessagingException, UnsupportedEncodingException {
