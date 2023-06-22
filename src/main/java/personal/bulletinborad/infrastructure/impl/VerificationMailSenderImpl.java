@@ -1,4 +1,4 @@
-package personal.bulletinborad.infrastructure;
+package personal.bulletinborad.infrastructure.impl;
 
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.InternetAddress;
@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.MailException;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Component;
+import personal.bulletinborad.infrastructure.VerificationMailSender;
 
 import java.io.UnsupportedEncodingException;
 import java.util.Random;
