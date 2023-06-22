@@ -37,6 +37,10 @@ public class MemberService {
         return savedMember.getId();
     }
 
+    public void verify() {
+
+    }
+
     private void checkExist(String s1, String s2, String message) {
         if (s1.equals(s2)) {
             throw new ExistMemberException(message);
