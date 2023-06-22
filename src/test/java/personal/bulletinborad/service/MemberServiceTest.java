@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 import personal.bulletinborad.entity.Member;
-import personal.bulletinborad.enumtype.Approval;
+import personal.bulletinborad.enumtype.Verification;
 import personal.bulletinborad.exception.ExistMemberException;
 import personal.bulletinborad.infrastructure.MemberRepository;
 import personal.bulletinborad.mock.FakeMailSender;
@@ -81,7 +81,7 @@ class MemberServiceTest {
         boolean verify = memberService.verify(memberId, FakeMailSender.SEND_MESSAGE);
         Member member = memberRepository.findById(memberId).get();
         assertThat(verify).isTrue();
-        assertThat(member.getApproval()).isEqualTo(Approval.COMPLETE);
+        assertThat(member.getVerification()).isEqualTo(Verification.COMPLETE);
     }
 
     @Test

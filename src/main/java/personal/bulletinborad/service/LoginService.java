@@ -5,9 +5,13 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import personal.bulletinborad.entity.Member;
+import personal.bulletinborad.exception.ExceptionMessage;
+import personal.bulletinborad.exception.LoginException;
 import personal.bulletinborad.infrastructure.MemberRepository;
 
 import java.util.Optional;
+
+import static personal.bulletinborad.exception.ExceptionMessage.*;
 
 @Slf4j
 @Service
@@ -21,12 +25,16 @@ public class LoginService {
         Optional<Member> optionalMember = memberRepository.findByLoginId(loginId);
 
         if (optionalMember.isEmpty()) {
-            throw new IllegalArgumentException("해당 아이디가 존재하지 않습니다.");
+            throw new LoginException(NOT_EXIST_NICKNAME);
         }
 
         Member member = optionalMember.get();
 
-        if (member.getPassword().equals(password)) {
+        if (!member.isVerified()) {
+            throw new LoginException(NOT_VERIFY);
+        }
+
+        if (member.isMatchedPassword(password)) {
             return member;
         } else  {
             return null;

@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import personal.bulletinborad.entity.mapedsuperclass.BaseTime;
-import personal.bulletinborad.enumtype.Approval;
+import personal.bulletinborad.enumtype.Verification;
 import personal.bulletinborad.enumtype.Role;
 
 import static jakarta.persistence.EnumType.*;
@@ -33,7 +33,7 @@ public class Member extends BaseTime {
 
     @Enumerated(STRING)
     @Column(nullable = false)
-    private Approval approval;
+    private Verification verification;
 
     @Enumerated(STRING)
     @Column(nullable = false)
@@ -44,11 +44,19 @@ public class Member extends BaseTime {
         this.password = password;
         this.email = email;
         this.nickname = nickname;
-        this.approval = Approval.NONE;
+        this.verification = Verification.NONE;
         this.role = Role.COMMON;
     }
 
     public void verify() {
-        approval = Approval.COMPLETE;
+        verification = Verification.COMPLETE;
+    }
+
+    public boolean isVerified() {
+        return getVerification() == Verification.COMPLETE ? true : false;
+    }
+
+    public boolean isMatchedPassword(String password) {
+        return getPassword().equals(password);
     }
 }

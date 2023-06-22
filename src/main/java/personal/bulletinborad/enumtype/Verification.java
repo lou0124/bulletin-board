@@ -1,5 +1,5 @@
 package personal.bulletinborad.enumtype;
 
-public enum Approval {
+public enum Verification {
     COMPLETE, NONE
 }
