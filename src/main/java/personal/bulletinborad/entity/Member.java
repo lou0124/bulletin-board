@@ -16,7 +16,7 @@ import static lombok.AccessLevel.*;
 public class Member extends BaseTime {
 
     @Id @GeneratedValue
-    @Column(name = "user_id")
+    @Column(name = "member_id")
     private Long id;
 
     @Column(nullable = false, unique = true)

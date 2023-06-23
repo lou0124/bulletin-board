@@ -1,15 +1,17 @@
 package personal.bulletinborad.entity;
 
 import jakarta.persistence.*;
+import lombok.NoArgsConstructor;
 import personal.bulletinborad.entity.mapedsuperclass.BaseTime;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static jakarta.persistence.FetchType.*;
+import static lombok.AccessLevel.PROTECTED;
 
 @Entity
-//@NoArgsConstructor(access = PROTECTED)
+@NoArgsConstructor(access = PROTECTED)
 public class Post extends BaseTime {
 
     @Id @GeneratedValue
@@ -17,11 +19,11 @@ public class Post extends BaseTime {
     private Long id;
 
     @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "member_id", nullable = false)
     private Member member;
 
     @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "category_id", nullable = false)
+    @JoinColumn(name = "category_id")
     private Category category;
 
     @Column(nullable = false)
@@ -30,11 +32,20 @@ public class Post extends BaseTime {
     @Column(columnDefinition = "TEXT")
     private String content;
 
-    private Integer like;
+    private Integer likeCount;
 
     @OneToMany(mappedBy = "post", orphanRemoval = true)
     private List<Comment> comments = new ArrayList<>();
 
     @OneToMany(mappedBy = "post", orphanRemoval = true)
     private List<File> files = new ArrayList<>();
+
+    public Post(Member member, Category category, String title, String content, Integer likeCount, List<File> files) {
+        this.member = member;
+        this.category = category;
+        this.title = title;
+        this.content = content;
+        this.likeCount = likeCount;
+        this.files = files;
+    }
 }
