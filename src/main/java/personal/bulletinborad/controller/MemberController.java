@@ -40,9 +40,8 @@ public class MemberController {
 
     @PostMapping("/verify/{memberId}")
     public String verify(@PathVariable Long memberId, @ModelAttribute("code") String code, RedirectAttributes attributes) {
-        log.info("memberId = {}", memberId);
-        log.info("code = {}", code);
         if (memberService.verify(memberId, code)) {
+            log.info("memberId = {} code = {} 인증 성공", memberId);
             return "redirect:/";
         }
 
