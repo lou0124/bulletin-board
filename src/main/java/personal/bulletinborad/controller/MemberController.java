@@ -5,10 +5,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import personal.bulletinborad.controller.form.MemberForm;
 import personal.bulletinborad.exception.LoginException;
 import personal.bulletinborad.exception.NotMatchedPasswordException;
@@ -30,13 +28,30 @@ public class MemberController {
     }
 
     @PostMapping("/add")
-    public String join(@ModelAttribute("memberForm") MemberForm form, Model model) {
+    public String join(@ModelAttribute("memberForm") MemberForm form) {
 
         if (!form.getPassword().equals(form.getPasswordConfirm())) {
             throw new NotMatchedPasswordException("패스워드 확인 실패");
         }
 
-        memberService.join(form.getLoginId(), form.getPassword(), form.getEmail(), form.getNickname());
-        return "redirect:/";
+        Long memberId = memberService.join(form.getLoginId(), form.getPassword(), form.getEmail(), form.getNickname());
+        return "redirect:/members/verify/" + memberId;
+    }
+
+    @GetMapping("/verify/{memberId}")
+    public String verifyForm(@PathVariable String memberId) {
+        return "members/verifyMemberForm";
+    }
+
+    @PostMapping("/verify/{memberId}")
+    public String verify(@PathVariable Long memberId, @ModelAttribute("code") String code, RedirectAttributes attributes) {
+        log.info("memberId = {}", memberId);
+        log.info("code = {}", code);
+        if (memberService.verify(memberId, code)) {
+            return "redirect:/";
+        }
+
+        attributes.addFlashAttribute("failMessage", "인증에 실패 하였습니다.");
+        return "redirect:/members/verify/" + memberId;
     }
 }

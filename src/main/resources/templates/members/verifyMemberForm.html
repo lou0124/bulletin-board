@@ -1,0 +1,22 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>인증 화면</title>
+</head>
+<body>
+
+<h3>5분 후에 인증코드가 만료 됩니다.</h3>
+
+<form action="" th:accept method="post">
+    <div>
+        <label for="code">닉네임</label>
+        <input type="text" id="code" name="code" value="" placeholder="인증 코드를 입력하세요">
+    </div>
+    <div>
+        <button type="submit">입력 완료</button>
+    </div>
+    <span th:if="${failMessage != null}" th:text="${failMessage}"></span>
+</form>
+</body>
+</html>
