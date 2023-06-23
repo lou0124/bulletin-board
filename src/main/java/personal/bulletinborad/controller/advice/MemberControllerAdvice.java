@@ -1,6 +1,5 @@
 package personal.bulletinborad.controller.advice;
 
-import jakarta.mail.MessagingException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.mail.MailException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -8,9 +7,6 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import personal.bulletinborad.controller.MemberController;
 import personal.bulletinborad.exception.ExistMemberException;
-
-import java.io.UnsupportedEncodingException;
-
 @Slf4j
 @ControllerAdvice(assignableTypes = {MemberController.class})
 public class MemberControllerAdvice {
