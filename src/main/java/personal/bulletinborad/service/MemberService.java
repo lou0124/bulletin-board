@@ -40,11 +40,7 @@ public class MemberService {
         Member savedMember = memberRepository.save(new Member(loginId, password, email, nickname));
         log.info("로그인 가입요청 완료 = {}", loginId);
 
-        try {
-            sendMessage(email);
-        } catch (Exception e) {
-            throw new RuntimeException("메일 전송 중 오류가 발생하였습니다.", e);
-        }
+        sendMessage(email);
 
         return savedMember.getId();
     }
@@ -70,7 +66,7 @@ public class MemberService {
         }
     }
 
-    private void sendMessage(String to) throws MessagingException, UnsupportedEncodingException {
+    private void sendMessage(String to) {
         String code = mailSender.send(to);
         verificationCodeRepository.save(to, code, 60 * 5L);
         log.info("{} 에게 {} 코드 전송 및 저장", to, code);

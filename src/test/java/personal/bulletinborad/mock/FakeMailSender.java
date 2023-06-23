@@ -10,7 +10,7 @@ public class FakeMailSender implements VerificationMailSender {
     public static final String SEND_MESSAGE = "123456";
 
     @Override
-    public String send(String to) throws MessagingException, UnsupportedEncodingException {
+    public String send(String to) {
         return SEND_MESSAGE;
     }
 }

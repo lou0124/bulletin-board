@@ -6,9 +6,9 @@ import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.mail.MailException;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Component;
+import personal.bulletinborad.exception.MailException;
 import personal.bulletinborad.infrastructure.VerificationMailSender;
 
 import java.io.UnsupportedEncodingException;
@@ -25,18 +25,23 @@ public class VerificationMailSenderImpl implements VerificationMailSender {
     private String id;
 
     @Override
-    public String send(String to) throws MessagingException, UnsupportedEncodingException {
+    public String send(String to) {
         String code = createKey();
-        MimeMessage message = createMessage(to, code);
+
+        MimeMessage message = null;
+        try {
+            message = createMessage(to, code);
+        } catch (Exception e) {
+            log.info("메세지 생성에 실패했습니다", e);
+            e.printStackTrace();
+        }
 
         try {
             javaMailSender.send(message);
-            log.info("메일 전송 성공: {}", to);
-        } catch(MailException e){
-            log.info("메일 전송 실패: {}", to);
-            e.printStackTrace();
-            throw new IllegalArgumentException(e);
+        } catch (Exception e) {
+            throw new MailException(e);
         }
+
         return code;
     }
 

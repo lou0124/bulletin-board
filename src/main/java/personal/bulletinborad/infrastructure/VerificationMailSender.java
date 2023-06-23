@@ -6,5 +6,5 @@ import java.io.UnsupportedEncodingException;
 
 public interface VerificationMailSender {
 
-    String send(String to)  throws MessagingException, UnsupportedEncodingException;
+    String send(String to) ;
 }
