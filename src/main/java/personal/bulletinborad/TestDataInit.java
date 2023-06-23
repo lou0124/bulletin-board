@@ -24,7 +24,7 @@ public class TestDataInit {
         member.verify();
         memberRepository.save(member);
 
-        for (int i = 0; i < 100; i++) {
+        for (int i = 0; i < 200; i++) {
             postRepository.save(new Post(member, null, "title" + i, "content" + i, 0, null));
         }
     }
