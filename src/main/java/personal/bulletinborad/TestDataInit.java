@@ -20,12 +20,19 @@ public class TestDataInit {
 
     @EventListener(ApplicationReadyEvent.class)
     public void initData() {
-        Member member = new Member("test", "1234", "abc@naver.com", "apple");
-        member.verify();
-        memberRepository.save(member);
+        Member member1 = new Member("test", "1234", "abc@naver.com", "apple");
+        Member member2 = new Member("test2", "1234", "abc2@naver.com", "banana");
+        member1.verify();
+        member2.verify();
+        memberRepository.save(member1);
+        memberRepository.save(member2);
 
         for (int i = 0; i < 200; i++) {
-            postRepository.save(new Post(member, null, "title" + i, "content" + i, 0, null));
+            if (i % 2 == 0) {
+                postRepository.save(new Post(member1, null, "title" + i, "content" + i, 0, null));
+            } else {
+                postRepository.save(new Post(member2, null, "title" + i, "content" + i, 0, null));
+            }
         }
     }
 }

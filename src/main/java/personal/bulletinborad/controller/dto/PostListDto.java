@@ -24,4 +24,13 @@ public class PostListDto {
         this.writtenDate = formattedDate;
     }
 
+    public PostListDto(Long id, String title, String writer, LocalDateTime date) {
+        this.id = id;
+        this.title = title;
+        this.writer = writer;
+        String formattedDate = String.format("%d-%02d-%02d %02d:%02d:%02d",
+                date.getYear(), date.getMonthValue(), date.getDayOfMonth(),
+                date.getHour(), date.getMinute(), date.getSecond());
+        this.writtenDate = formattedDate;
+    }
 }

@@ -13,6 +13,8 @@ import personal.bulletinborad.controller.dto.PostListDto;
 import personal.bulletinborad.entity.Post;
 import personal.bulletinborad.infrastructure.PostRepository;
 
+import java.util.List;
+
 @Slf4j
 @Controller
 @RequiredArgsConstructor
@@ -24,7 +26,7 @@ public class PostController {
     @GetMapping
     public String posts(@RequestParam(defaultValue = "1") Integer page, Model model) {
         PageRequest pageRequest = PageRequest.of(page - 1, 10);
-        Page<PostListDto> posts = postRepository.findAll(pageRequest).map(post -> new PostListDto(post));
+        Page<PostListDto> posts = postRepository.findAllPost(pageRequest).map(post -> new PostListDto(post));
         model.addAttribute("posts", posts);
         return "posts/list";
     }
