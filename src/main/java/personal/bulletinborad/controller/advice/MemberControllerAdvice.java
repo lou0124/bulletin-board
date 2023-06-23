@@ -23,7 +23,7 @@ public class MemberControllerAdvice {
         return "redirect:/members/add";
     }
 
-    @ExceptionHandler({ MailException.class})
+    @ExceptionHandler(MailException.class)
     public String a(Exception e, RedirectAttributes attributes) {
         attributes.addFlashAttribute(EXCEPTION_MESSAGE_KEY, "이메일을 보낼 수 없습니다. 이메일을 올바르게 입력하였는지 확인해 주세요.");
         return "redirect:/members/add";
