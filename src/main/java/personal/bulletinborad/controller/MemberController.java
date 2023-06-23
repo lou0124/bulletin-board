@@ -1,18 +1,13 @@
 package personal.bulletinborad.controller;
 
-import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import personal.bulletinborad.controller.form.MemberForm;
-import personal.bulletinborad.exception.LoginException;
 import personal.bulletinborad.exception.NotMatchedPasswordException;
 import personal.bulletinborad.service.MemberService;
-
-import java.io.UnsupportedEncodingException;
 
 @Slf4j
 @Controller
