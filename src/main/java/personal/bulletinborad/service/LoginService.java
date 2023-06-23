@@ -34,10 +34,10 @@ public class LoginService {
             throw new LoginException(NOT_VERIFY);
         }
 
-        if (member.isMatchedPassword(password)) {
-            return member;
-        } else  {
-            return null;
+        if (!member.isMatchedPassword(password)) {
+            throw new LoginException(NOT_MATCHED_PASSWORD);
         }
+
+        return member;
     }
 }

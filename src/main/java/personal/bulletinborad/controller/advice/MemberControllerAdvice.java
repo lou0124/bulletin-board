@@ -9,11 +9,13 @@ import personal.bulletinborad.controller.MemberController;
 import personal.bulletinborad.exception.ExistMemberException;
 import personal.bulletinborad.exception.NotMatchedPasswordException;
 
+import static personal.bulletinborad.controller.AttributeNameConst.EXCEPTION_MESSAGE_KEY;
+
 @Slf4j
 @ControllerAdvice(assignableTypes = {MemberController.class})
 public class MemberControllerAdvice {
 
-    private final String EXCEPTION_MESSAGE_KEY = "message";
+
 
     @ExceptionHandler(ExistMemberException.class)
     public String existMemberInfo(ExistMemberException e, RedirectAttributes attributes) {

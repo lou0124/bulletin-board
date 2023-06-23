@@ -9,6 +9,8 @@ import personal.bulletinborad.controller.form.MemberForm;
 import personal.bulletinborad.exception.NotMatchedPasswordException;
 import personal.bulletinborad.service.MemberService;
 
+import static personal.bulletinborad.controller.AttributeNameConst.EXCEPTION_MESSAGE_KEY;
+
 @Slf4j
 @Controller
 @RequiredArgsConstructor
@@ -45,7 +47,7 @@ public class MemberController {
             return "redirect:/";
         }
 
-        attributes.addFlashAttribute("failMessage", "인증에 실패 하였습니다.");
+        attributes.addFlashAttribute(EXCEPTION_MESSAGE_KEY, "인증에 실패 하였습니다.");
         return "redirect:/members/verify/" + memberId;
     }
 }
