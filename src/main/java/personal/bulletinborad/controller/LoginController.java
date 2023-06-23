@@ -29,7 +29,7 @@ public class LoginController {
         HttpSession session = request.getSession();
         session.setAttribute("member", member);
 
-        return "redirect:/";
+        return "redirect:/posts";
     }
 
     @PostMapping("/logout")

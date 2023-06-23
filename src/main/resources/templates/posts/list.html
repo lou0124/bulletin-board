@@ -1,0 +1,24 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<table>
+    <thead>
+    <tr>
+        <th>제목</th>
+        <th>닉네임</th>
+        <th>작성일</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="post : ${posts}">
+        <td><a href="posts.html" th:href="@{/posts/{postId}(postId=${post.id})}" th:text="${post.title}">제목</a></td>
+        <td th:text="${post.member.nickname}">닉네임</td>
+        <td th:text="${post.createdDate}">작성일</td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

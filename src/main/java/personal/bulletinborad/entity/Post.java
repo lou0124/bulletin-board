@@ -1,6 +1,7 @@
 package personal.bulletinborad.entity;
 
 import jakarta.persistence.*;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import personal.bulletinborad.entity.mapedsuperclass.BaseTime;
 
@@ -11,6 +12,7 @@ import static jakarta.persistence.FetchType.*;
 import static lombok.AccessLevel.PROTECTED;
 
 @Entity
+@Getter
 @NoArgsConstructor(access = PROTECTED)
 public class Post extends BaseTime {
 
