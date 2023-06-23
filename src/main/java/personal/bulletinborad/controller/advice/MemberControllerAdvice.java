@@ -15,8 +15,6 @@ import static personal.bulletinborad.controller.AttributeNameConst.EXCEPTION_MES
 @ControllerAdvice(assignableTypes = {MemberController.class})
 public class MemberControllerAdvice {
 
-
-
     @ExceptionHandler(ExistMemberException.class)
     public String existMemberInfo(ExistMemberException e, RedirectAttributes attributes) {
         attributes.addFlashAttribute(EXCEPTION_MESSAGE_KEY, e.getMessage());
