@@ -20,12 +20,12 @@ public class MemberController {
     private final MemberService memberService;
 
     @GetMapping("/add")
-    public String addForm(@ModelAttribute("memberForm") MemberForm form, @ModelAttribute String message) {
+    public String addForm(@ModelAttribute MemberForm memberForm, @ModelAttribute String message) {
         return "members/addMemberForm";
     }
 
     @PostMapping("/add")
-    public String join(@ModelAttribute("memberForm") MemberForm form) {
+    public String join(@ModelAttribute MemberForm form) {
 
         if (!form.getPassword().equals(form.getPasswordConfirm())) {
             throw new NotMatchedPasswordException("패스워드 확인 실패");
