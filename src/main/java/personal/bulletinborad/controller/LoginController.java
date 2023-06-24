@@ -21,12 +21,12 @@ public class LoginController {
     private final LoginService loginService;
 
     @GetMapping("/login")
-    public String loginForm(@ModelAttribute("loginForm") LoginForm form, @ModelAttribute String message) {
+    public String loginForm(@ModelAttribute LoginForm loginForm, @ModelAttribute String message) {
         return "loginForm";
     }
 
     @PostMapping("/login")
-    public String login(@ModelAttribute LoginForm form, RedirectAttributes attributes, HttpServletRequest request) {
+    public String login(@ModelAttribute LoginForm form, HttpServletRequest request) {
         Long memberId = loginService.login(form.getLoginId(), form.getPassword());
 
         HttpSession session = request.getSession();
