@@ -4,63 +4,78 @@
     <meta charset="UTF-8">
     <link th:href="@{/css/bootstrap.min.css}"
           href="../css/bootstrap.min.css" rel="stylesheet">
-    <title>Title</title>
+    <title>게시글 목록</title>
+    <style>
+        .container-center {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        .pagination {
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+    </style>
 </head>
-<body class="container">
+<body>
+    <div class="container container-center">
+        <table class="table">
+            <thead>
+            <thead>
+            <tr>
+                <th style="width: 60%;">제목</th>
+                <th style="width: 20%;">닉네임</th>
+                <th style="width: 20%;">작성일</th>
+            </tr>
+            </thead>
+            </thead>
+            <tbody>
+            <tr th:each="post : ${posts}">
+                <td><a href="posts.html" th:href="@{/posts/{postId}(postId=${post.id})}" th:text="${post.title}">제목</a></td>
+                <td th:text="${post.writer}">닉네임</td>
+                <td th:text="${post.writtenDate}">작성일</td>
+            </tr>
+            </tbody>
+        </table>
 
-    <table class="table">
-        <thead>
-        <tr>
-            <th>제목</th>
-            <th>닉네임</th>
-            <th>작성일</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="post : ${posts}">
-            <td><a href="posts.html" th:href="@{/posts/{postId}(postId=${post.id})}" th:text="${post.title}">제목</a></td>
-            <td th:text="${post.writer}">닉네임</td>
-            <td th:text="${post.writtenDate}">작성일</td>
-        </tr>
-        </tbody>
-    </table>
+        <nav style="text-align: center;">
+            <ul class="pagination"
+                th:with="start=${T(java.lang.Math).floor(posts.number/10)*10 + 1},
+                last=(${start + 9 < posts.totalPages ? start + 9 : posts.totalPages})">
+                <li th:class="page-item">
+                    <a th:href="@{/posts(page=1)}" aria-label="First" th:class="page-link">
+                        <span aria-hidden="true">First</span>
+                    </a>
+                </li>
+                <li th:class="${posts.first} ? 'disabled page-item' : 'page-item'">
+                    <a th:href="${posts.first} ? '#' : @{/posts(page=${posts.number})}" aria-label="Previous" th:class="page-link">
+                        <span aria-hidden="true">&lt;</span>
+                    </a>
+                </li>
 
-    <nav style="text-align: center;" aria-label="Page navigation example">
-        <ul class="pagination"
-            th:with="start=${T(java.lang.Math).floor(posts.number/10)*10 + 1},
-            last=(${start + 9 < posts.totalPages ? start + 9 : posts.totalPages})">
-            <li th:class="page-item">
-                <a th:href="@{/posts(page=1)}" aria-label="First" th:class="page-link">
-                    <span aria-hidden="true">First</span>
-                </a>
-            </li>
-            <li th:class="${posts.first} ? 'disabled page-item' : 'page-item'">
-                <a th:href="${posts.first} ? '#' : @{/posts(page=${posts.number})}" aria-label="Previous" th:class="page-link">
-                    <span aria-hidden="true">&lt;</span>
-                </a>
-            </li>
+                <li th:each="page: ${#numbers.sequence(start, last)}" th:class="${page == posts.number + 1} ? 'active page-item' : 'page-item'">
+                    <a th:text="${page}" th:href="@{/posts(page=${page})}" class="page-link" l></a>
+                </li>
 
-            <li th:each="page: ${#numbers.sequence(start, last)}" th:class="${page == posts.number + 1} ? 'active page-item' : 'page-item'">
-                <a th:text="${page}" th:href="@{/posts(page=${page})}" class="page-link" l></a>
-            </li>
+                <li th:class="${posts.last} ? 'disabled page-item' : 'page-item'">
+                    <a th:href="${posts.last} ? '#' : @{/posts(page=${posts.number + 2})}" aria-label="Next" th:class="page-link">
+                        <span aria-hidden="true">&gt;</span>
+                    </a>
+                </li>
 
-            <li th:class="${posts.last} ? 'disabled page-item' : 'page-item'">
-                <a th:href="${posts.last} ? '#' : @{/posts(page=${posts.number + 2})}" aria-label="Next" th:class="page-link">
-                    <span aria-hidden="true">&gt;</span>
-                </a>
-            </li>
-
-            <li th:class="page-item">
-                <a th:href="@{/posts(page=${posts.totalPages})}" aria-label="Last" th:class="page-link">
-                    <span aria-hidden="true">Last</span>
-                </a>
-            </li>
-        </ul>
-        <div class="text-right">
-            <a href="/posts/add" class="btn btn-primary">글쓰기</a>
-        </div>
-    </nav>
-
-
+                <li th:class="page-item">
+                    <a th:href="@{/posts(page=${posts.totalPages})}" aria-label="Last" th:class="page-link">
+                        <span aria-hidden="true">Last</span>
+                    </a>
+                </li>
+            </ul>
+            <div class="text-right">
+                <a href="/posts/add" class="btn btn-primary">글쓰기</a>
+            </div>
+        </nav>
+    </div>
 </body>
 </html>

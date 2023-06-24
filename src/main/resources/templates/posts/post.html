@@ -5,6 +5,11 @@
     <title>게시글 상세보기</title>
     <link th:href="@{/css/bootstrap.min.css}"
           href="../css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .content-wrapper {
+            word-break: break-all;  /* 글이 영역을 벗어날 경우 줄 바꿈 적용 */
+        }
+    </style>
 </head>
 <body>
     <div class="container">
@@ -18,7 +23,7 @@
                     <small class="text-muted">작성자: <span th:text="${post.writer}"></span></small>
                 </div>
                 <hr>
-                <div th:text="${post.content}"></div>
+                <div th:class="content-wrapper" style="white-space: pre-line;" th:text="${post.content}"></div>
             </div>
         </div>
     </div>

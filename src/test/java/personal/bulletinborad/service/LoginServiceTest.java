@@ -66,9 +66,9 @@ class LoginServiceTest {
         Long memberId = memberService.join("apple", "1234", "apple@example.com", "banana");
         memberService.verify(memberId, FakeMailSender.SEND_MESSAGE);
         Member findMember = memberRepository.findById(memberId).get();
-        Long loginMemberId = loginService.login("apple", "1234");
+        Member loginMember = loginService.login("apple", "1234");
 
         assertThat(findMember.getVerification()).isEqualTo(COMPLETE);
-        assertThat(loginMemberId).isEqualTo(findMember.getId());
+        assertThat(loginMember).isEqualTo(findMember);
     }
 }

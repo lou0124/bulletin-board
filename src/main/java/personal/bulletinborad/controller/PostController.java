@@ -8,19 +8,17 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import personal.bulletinborad.controller.dto.PostDto;
 import personal.bulletinborad.controller.dto.PostListDto;
+import personal.bulletinborad.controller.form.PostForm;
 import personal.bulletinborad.entity.Member;
 import personal.bulletinborad.entity.Post;
 import personal.bulletinborad.infrastructure.PostRepository;
 
 import java.util.Optional;
 
-import static personal.bulletinborad.controller.AttributeNameConst.SESSION_MEMBER_ID;
+import static personal.bulletinborad.controller.AttributeNameConst.SESSION_MEMBER;
 
 @Slf4j
 @Controller
@@ -48,21 +46,33 @@ public class PostController {
     }
 
     @GetMapping("/add")
-    public String add(HttpServletRequest request) {
-        HttpSession session = request.getSession(false);
-
-        if (session == null) {
+    public String addForm(@ModelAttribute PostForm postForm, HttpServletRequest request, Model model) {
+        Member member = getLoginMember(request);
+        if (member == null) {
             return "redirect:/login";
-        }
-
-        Long memberId = (Long) session.getAttribute(SESSION_MEMBER_ID);
-
-        if (memberId == null) {
-            return "redirect:/login";
-        }
-
-        log.info("memberId = {}", memberId);
-
+        };
         return "posts/postForm";
+    }
+
+    @PostMapping("/add")
+    public String write(@ModelAttribute PostForm form, HttpServletRequest request) {
+        Member member = getLoginMember(request);
+        if (member == null) {
+            return "redirect:/login";
+        }
+
+        Post post = new Post(member, null, form.getTitle(), form.getContent(), 0, null);
+        postRepository.save(post);
+
+        return "redirect:/posts";
+    }
+
+    private Member getLoginMember(HttpServletRequest request) {
+        HttpSession session = request.getSession(false);
+        if (session == null) {
+            return null;
+        }
+
+        return (Member) session.getAttribute(SESSION_MEMBER);
     }
 }
