@@ -2,13 +2,25 @@
 <head>
     <meta charset="UTF-8">
     <title>홈</title>
+    <link th:href="@{/css/bootstrap.min.css}"
+          href="../css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-<button type="button" th:onclick="|location.href='@{/members/add}'|">
-    회원 가입
-</button>
-<button type="button" th:onclick="|location.href='@{/login}'|">
-    로그인
-</button>
+<div class="container">
+    <div class="row justify-content-center mt-5">
+        <div class="col-md-6">
+            <button type="button" class="btn btn-primary btn-block" th:onclick="|location.href='@{/members/add}'|">
+                회원 가입
+            </button>
+        </div>
+    </div>
+    <div class="row justify-content-center mt-3">
+        <div class="col-md-6">
+            <button type="button" class="btn btn-success btn-block" th:onclick="|location.href='@{/login}'|">
+                로그인
+            </button>
+        </div>
+    </div>
+</div>
 </body>
 </html>

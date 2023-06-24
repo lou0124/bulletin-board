@@ -27,7 +27,7 @@ public class TestDataInit {
         memberRepository.save(member1);
         memberRepository.save(member2);
 
-        for (int i = 0; i < 200; i++) {
+        for (int i = 1; i <= 200; i++) {
             if (i % 2 == 0) {
                 postRepository.save(new Post(member1, null, "title" + i, "content" + i, 0, null));
             } else {

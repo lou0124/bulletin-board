@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>게시글 상세보기</title>
+    <link th:href="@{/css/bootstrap.min.css}"
+          href="../css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 offset-md-2">
+                <h1 th:text="${post.title}" class="text-center display-4 mb-4"></h1>
+                <div class="text-center mb-3">
+                    <small class="text-muted">작성일: <span th:text="${post.writtenDate}"></span></small>
+                </div>
+                <div class="text-center mb-3">
+                    <small class="text-muted">작성자: <span th:text="${post.writer}"></span></small>
+                </div>
+                <hr>
+                <div th:text="${post.content}"></div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
