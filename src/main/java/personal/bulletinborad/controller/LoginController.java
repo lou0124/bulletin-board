@@ -12,7 +12,7 @@ import personal.bulletinborad.controller.form.LoginForm;
 import personal.bulletinborad.entity.Member;
 import personal.bulletinborad.service.LoginService;
 
-import static personal.bulletinborad.controller.AttributeNameConst.SESSION_MEMBER;
+import static personal.bulletinborad.controller.AttributeNameConst.SESSION_MEMBER_ID;
 
 @Controller
 @RequiredArgsConstructor
@@ -27,10 +27,10 @@ public class LoginController {
 
     @PostMapping("/login")
     public String login(@ModelAttribute LoginForm form, RedirectAttributes attributes, HttpServletRequest request) {
-        Member member = loginService.login(form.getLoginId(), form.getPassword());
+        Long memberId = loginService.login(form.getLoginId(), form.getPassword());
 
         HttpSession session = request.getSession();
-        session.setAttribute(SESSION_MEMBER, member);
+        session.setAttribute(SESSION_MEMBER_ID, memberId);
 
         return "redirect:/posts";
     }

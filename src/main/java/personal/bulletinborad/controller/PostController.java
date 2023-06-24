@@ -20,7 +20,7 @@ import personal.bulletinborad.infrastructure.PostRepository;
 
 import java.util.Optional;
 
-import static personal.bulletinborad.controller.AttributeNameConst.SESSION_MEMBER;
+import static personal.bulletinborad.controller.AttributeNameConst.SESSION_MEMBER_ID;
 
 @Slf4j
 @Controller
@@ -55,13 +55,13 @@ public class PostController {
             return "redirect:/login";
         }
 
-        Member member = (Member) session.getAttribute(SESSION_MEMBER);
+        Long memberId = (Long) session.getAttribute(SESSION_MEMBER_ID);
 
-        if (member == null) {
+        if (memberId == null) {
             return "redirect:/login";
         }
 
-        log.info(member.getNickname());
+        log.info("memberId = {}", memberId);
 
         return "posts/postForm";
     }

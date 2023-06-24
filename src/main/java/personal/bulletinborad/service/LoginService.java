@@ -21,7 +21,7 @@ public class LoginService {
 
     private final MemberRepository memberRepository;
 
-    public Member login(String loginId, String password) {
+    public Long login(String loginId, String password) {
         Optional<Member> optionalMember = memberRepository.findByLoginId(loginId);
 
         if (optionalMember.isEmpty()) {
@@ -38,6 +38,6 @@ public class LoginService {
             throw new LoginException(NOT_MATCHED_PASSWORD);
         }
 
-        return member;
+        return member.getId();
     }
 }
