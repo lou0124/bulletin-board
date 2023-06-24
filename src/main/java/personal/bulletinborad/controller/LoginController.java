@@ -11,6 +11,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import personal.bulletinborad.controller.form.LoginForm;
 import personal.bulletinborad.entity.Member;
 import personal.bulletinborad.service.LoginService;
+
+import static personal.bulletinborad.controller.AttributeNameConst.SESSION_MEMBER;
+
 @Controller
 @RequiredArgsConstructor
 public class LoginController {
@@ -27,7 +30,7 @@ public class LoginController {
         Member member = loginService.login(form.getLoginId(), form.getPassword());
 
         HttpSession session = request.getSession();
-        session.setAttribute("member", member);
+        session.setAttribute(SESSION_MEMBER, member);
 
         return "redirect:/posts";
     }
