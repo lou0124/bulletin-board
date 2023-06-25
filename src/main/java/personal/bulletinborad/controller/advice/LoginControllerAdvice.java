@@ -23,7 +23,6 @@ public class LoginControllerAdvice {
         attributes.addFlashAttribute(EXCEPTION_MESSAGE_KEY, e.getMessage());
         if (e instanceof NotMatchedPasswordException) {
             LoginForm loginForm = new LoginForm(request.getParameter("loginId"));
-
             attributes.addFlashAttribute(LOGIN_FORM_KEY, loginForm);
         }
 
