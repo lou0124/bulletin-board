@@ -10,6 +10,7 @@ import personal.bulletinborad.exception.NotMatchedPasswordException;
 import personal.bulletinborad.service.MemberService;
 
 import static personal.bulletinborad.controller.AttributeNameConst.EXCEPTION_MESSAGE_KEY;
+import static personal.bulletinborad.controller.AttributeNameConst.MEMBER_FORM_KEY;
 
 @Slf4j
 @Controller
@@ -20,7 +21,8 @@ public class MemberController {
     private final MemberService memberService;
 
     @GetMapping("/add")
-    public String addForm(@ModelAttribute MemberForm memberForm, @ModelAttribute(EXCEPTION_MESSAGE_KEY) String message) {
+    public String addForm(@ModelAttribute(MEMBER_FORM_KEY) MemberForm memberForm,
+                          @ModelAttribute(EXCEPTION_MESSAGE_KEY) String message) {
         return "members/addMemberForm";
     }
 

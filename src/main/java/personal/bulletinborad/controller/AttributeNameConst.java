@@ -4,4 +4,5 @@ public interface AttributeNameConst {
     String EXCEPTION_MESSAGE_KEY = "message";
     String SESSION_MEMBER = "member";
     String LOGIN_FORM_KEY = "loginForm";
+    String MEMBER_FORM_KEY = "memberForm";
 }

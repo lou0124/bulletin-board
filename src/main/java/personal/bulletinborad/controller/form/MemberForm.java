@@ -10,5 +10,10 @@ public class MemberForm {
     private String passwordConfirm;
     private String email;
     private String nickname;
-    private String verificationCode;
+
+    public MemberForm(String loginId, String email, String nickname) {
+        this.loginId = loginId;
+        this.email = email;
+        this.nickname = nickname;
+    }
 }
