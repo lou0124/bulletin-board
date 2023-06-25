@@ -39,6 +39,22 @@
             margin-bottom: 20px;
         }
     </style>
+    <script>
+        window.addEventListener('DOMContentLoaded', (event) => {
+            const loginButton = document.getElementById('loginButton');
+            const signupButton = document.getElementById('signupButton');
+            const logoutForm = document.getElementById('logoutForm');
+
+            toggleButtons();
+
+            function toggleButtons() {
+                const isLoggedIn = document.getElementById('nickname') !== null;
+                loginButton.style.display = isLoggedIn ? 'none' : 'block';
+                signupButton.style.display = isLoggedIn ? 'none' : 'block';
+                logoutForm.style.display = isLoggedIn ? 'block' : 'none';
+            }
+        });
+    </script>
 </head>
 <body>
 
