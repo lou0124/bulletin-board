@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 import personal.bulletinborad.entity.Member;
 import personal.bulletinborad.exception.ExceptionMessage;
 import personal.bulletinborad.exception.LoginException;
+import personal.bulletinborad.exception.NotMatchedPasswordException;
 import personal.bulletinborad.infrastructure.MemberRepository;
 
 import java.util.Optional;
@@ -35,7 +36,7 @@ public class LoginService {
         }
 
         if (!member.isMatchedPassword(password)) {
-            throw new LoginException(NOT_MATCHED_PASSWORD);
+            throw new NotMatchedPasswordException(NOT_MATCHED_PASSWORD);
         }
 
         return member;
