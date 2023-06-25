@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import personal.bulletinborad.entity.Member;
+import personal.bulletinborad.enumtype.Verification;
 import personal.bulletinborad.exception.ExistMemberException;
 import personal.bulletinborad.infrastructure.MemberRepository;
 import personal.bulletinborad.infrastructure.VerificationCodeRepository;
@@ -14,6 +15,7 @@ import personal.bulletinborad.infrastructure.VerificationMailSender;
 import java.io.UnsupportedEncodingException;
 import java.util.Optional;
 
+import static personal.bulletinborad.enumtype.Verification.*;
 import static personal.bulletinborad.exception.ExceptionMessage.*;
 
 @Slf4j
@@ -30,12 +32,11 @@ public class MemberService {
     public Long join(String loginId, String password, String email, String nickname) {
 
         Optional<Member> optionalMember = memberRepository.findByLoginIdOrEmailOrNickname(loginId, email, nickname);
-        if (optionalMember.isPresent()) {
-            Member member = optionalMember.get();
+        optionalMember.ifPresent(member -> {
             checkExist(member.getLoginId(), loginId, EXIST_LOGIN_ID);
             checkExist(member.getEmail(), email, EXIST_EMAIL);
             checkExist(member.getNickname(), nickname, EXIST_NICKNAME);
-        }
+        });
 
         Member savedMember = memberRepository.save(new Member(loginId, password, email, nickname));
         log.info("로그인 가입요청 완료 = {}", loginId);
