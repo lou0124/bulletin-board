@@ -134,8 +134,18 @@
                 </a>
             </li>
         </ul>
+        <script th:inline="javascript">
+            function checkLogin() {
+                const nickname = /*[[${nickname}]]*/ null;
+                if (nickname == null) {
+                    alert('로그인이 필요합니다.');
+                } else {
+                    location.href = '/posts/add';
+                }
+            }
+        </script>
         <div class="text-right">
-            <a href="/posts/add" class="btn btn-primary">글쓰기</a>
+            <button type="button" id="writeButton" class="btn btn-primary" onclick="checkLogin()">글쓰기</button>
         </div>
     </nav>
 </div>
