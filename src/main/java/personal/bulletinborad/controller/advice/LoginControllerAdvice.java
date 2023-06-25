@@ -11,6 +11,7 @@ import personal.bulletinborad.exception.LoginException;
 import personal.bulletinborad.exception.NotMatchedPasswordException;
 
 import static personal.bulletinborad.controller.AttributeNameConst.EXCEPTION_MESSAGE_KEY;
+import static personal.bulletinborad.controller.AttributeNameConst.LOGIN_FORM_KEY;
 
 @Slf4j
 @ControllerAdvice(assignableTypes = {LoginController.class})
@@ -22,7 +23,8 @@ public class LoginControllerAdvice {
         attributes.addFlashAttribute(EXCEPTION_MESSAGE_KEY, e.getMessage());
         if (e instanceof NotMatchedPasswordException) {
             LoginForm loginForm = new LoginForm(request.getParameter("loginId"));
-            attributes.addFlashAttribute("loginForm", loginForm);
+
+            attributes.addFlashAttribute(LOGIN_FORM_KEY, loginForm);
         }
 
         return "redirect:/login";

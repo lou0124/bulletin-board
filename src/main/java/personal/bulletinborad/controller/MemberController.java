@@ -20,7 +20,7 @@ public class MemberController {
     private final MemberService memberService;
 
     @GetMapping("/add")
-    public String addForm(@ModelAttribute MemberForm memberForm, @ModelAttribute String message) {
+    public String addForm(@ModelAttribute MemberForm memberForm, @ModelAttribute(EXCEPTION_MESSAGE_KEY) String message) {
         return "members/addMemberForm";
     }
 

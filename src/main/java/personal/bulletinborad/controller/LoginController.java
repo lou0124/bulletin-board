@@ -11,7 +11,7 @@ import personal.bulletinborad.controller.form.LoginForm;
 import personal.bulletinborad.entity.Member;
 import personal.bulletinborad.service.LoginService;
 
-import static personal.bulletinborad.controller.AttributeNameConst.SESSION_MEMBER;
+import static personal.bulletinborad.controller.AttributeNameConst.*;
 
 @Controller
 @RequiredArgsConstructor
@@ -20,7 +20,8 @@ public class LoginController {
     private final LoginService loginService;
 
     @GetMapping("/login")
-    public String loginForm(@ModelAttribute LoginForm loginForm, @ModelAttribute String message) {
+    public String loginForm(@ModelAttribute(LOGIN_FORM_KEY) LoginForm loginForm,
+                            @ModelAttribute(EXCEPTION_MESSAGE_KEY) String message) {
         return "loginForm";
     }
 
