@@ -29,10 +29,12 @@ public class PostController {
     private final PostRepository postRepository;
 
     @GetMapping
-    public String posts(@RequestParam(defaultValue = "1") Integer page, Model model) {
+    public String posts(@RequestParam(defaultValue = "1") Integer page, Model model, HttpServletRequest request) {
+        Member member = getLoginMember(request);
         PageRequest pageRequest = PageRequest.of(page - 1, 10);
         Page<PostListDto> posts = postRepository.findAllPost(pageRequest)
                 .map(PostListDto::new);
+        model.addAttribute("nickname", getNickname(member));
         model.addAttribute("posts", posts);
         return "posts/list";
     }
@@ -74,5 +76,9 @@ public class PostController {
         }
 
         return (Member) session.getAttribute(SESSION_MEMBER);
+    }
+
+    private String getNickname(Member member) {
+        return member != null ? member.getNickname() : null;
     }
 }
