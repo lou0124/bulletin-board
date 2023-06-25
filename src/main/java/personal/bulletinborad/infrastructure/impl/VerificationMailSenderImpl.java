@@ -39,7 +39,7 @@ public class VerificationMailSenderImpl implements VerificationMailSender {
         try {
             javaMailSender.send(message);
         } catch (Exception e) {
-            throw new MailException(e);
+            throw new MailException("이메일을 보낼 수 없습니다. 이메일을 올바르게 입력하였는지 확인해 주세요.", e);
         }
 
         return code;
