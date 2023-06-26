@@ -19,6 +19,7 @@ import personal.bulletinborad.infrastructure.PostRepository;
 import java.util.Optional;
 
 import static personal.bulletinborad.controller.AttributeNameConst.SESSION_MEMBER;
+import static personal.bulletinborad.controller.Util.LoginMemberGetter.getLoginMember;
 
 @Slf4j
 @Controller
@@ -30,7 +31,7 @@ public class PostController {
 
     @GetMapping
     public String posts(@RequestParam(defaultValue = "1") Integer page, Model model, HttpServletRequest request) {
-        Member member = getLoginMember(request);
+        Member member = (Member) getLoginMember(request);
         PageRequest pageRequest = PageRequest.of(page - 1, 10);
         Page<PostListDto> posts = postRepository.findAllPost(pageRequest)
                 .map(PostListDto::new);
@@ -49,7 +50,7 @@ public class PostController {
 
     @GetMapping("/add")
     public String addForm(@ModelAttribute PostForm postForm, HttpServletRequest request, Model model) {
-        Member member = getLoginMember(request);
+        Member member = (Member) getLoginMember(request);
         if (member == null) {
             return "redirect:/login";
         };
@@ -58,7 +59,7 @@ public class PostController {
 
     @PostMapping("/add")
     public String write(@ModelAttribute PostForm form, HttpServletRequest request) {
-        Member member = getLoginMember(request);
+        Member member = (Member) getLoginMember(request);
         if (member == null) {
             return "redirect:/login";
         }
@@ -69,14 +70,14 @@ public class PostController {
         return "redirect:/posts";
     }
 
-    private Member getLoginMember(HttpServletRequest request) {
-        HttpSession session = request.getSession(false);
-        if (session == null) {
-            return null;
-        }
-
-        return (Member) session.getAttribute(SESSION_MEMBER);
-    }
+//    private Member getLoginMember(HttpServletRequest request) {
+//        HttpSession session = request.getSession(false);
+//        if (session == null) {
+//            return null;
+//        }
+//
+//        return (Member) session.getAttribute(SESSION_MEMBER);
+//    }
 
     private String getNickname(Member member) {
         return member != null ? member.getNickname() : null;
