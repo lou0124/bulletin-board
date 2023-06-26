@@ -42,11 +42,11 @@ public class LoginController {
     }
 
     @PostMapping("/logout")
-    public String logout(HttpServletRequest request) {
+    public String logout(@RequestParam(defaultValue = "/") String redirectPath, HttpServletRequest request) {
         HttpSession session = request.getSession(false);
         if (session != null) {
             session.invalidate();
         }
-        return "redirect:/posts";
+        return "redirect:" + redirectPath;
     }
 }

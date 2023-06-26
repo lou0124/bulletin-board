@@ -35,7 +35,7 @@ public class PostController {
         PageRequest pageRequest = PageRequest.of(page - 1, 10);
         Page<PostListDto> posts = postRepository.findAllPost(pageRequest)
                 .map(PostListDto::new);
-
+        model.addAttribute("nickname", getNickname(member));
         model.addAttribute("posts", posts);
         return "posts/list";
     }

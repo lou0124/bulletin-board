@@ -23,7 +23,7 @@
   <button type="button" class="btn btn-success btn-block" th:if="${nickname == null}" th:onclick="|redirectToLogin('@{/login}')|">
     로그인
   </button>
-  <button type="button" class="btn btn-primary btn-block" th:if="${nickname == null}" th:onclick="|location.href='@{/members/add}'|">
+  <button type="button" class="btn btn-primary btn-block" th:if="${nickname == null}" th:onclick="|redirectToLogin('@{/members/add}')|">
     회원 가입
   </button>
 </div>
