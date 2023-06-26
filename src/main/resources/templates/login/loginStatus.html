@@ -34,7 +34,7 @@
         <span th:text="${nickname}" style="font-weight: bold;"></span>
         <span>님 안녕하세요!</span>
     </span>
-    <button type="button" class="btn btn-success btn-block" th:if="${nickname != null}" th:onclick="|redirectToLogin('@{/logout}')|">
+    <button type="button" class="btn btn-secondary btn-sm" th:if="${nickname != null}" th:onclick="|redirectToLogin('@{/logout}')|">
       로그아웃
     </button>
   </div>
