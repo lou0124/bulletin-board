@@ -30,14 +30,12 @@
 
 <div class="container-top-right">
   <div class="d-flex align-items-center">
-        <span th:if="${nickname != null}" style="margin-right: 10px;">
-            <span th:text="${nickname}" style="font-weight: bold;"></span>
-            <span>님 안녕하세요!</span>
-        </span>
-    <form method="post" th:if="${nickname != null}" th:action="@{/logout}">
-      <button type="submit" class="btn btn-primary btn-sm">
-        로그아웃
-      </button>
-    </form>
+    <span th:if="${nickname != null}" style="margin-right: 10px;">
+        <span th:text="${nickname}" style="font-weight: bold;"></span>
+        <span>님 안녕하세요!</span>
+    </span>
+    <button type="button" class="btn btn-success btn-block" th:if="${nickname != null}" th:onclick="|redirectToLogin('@{/logout}')|">
+      로그아웃
+    </button>
   </div>
 </div>
