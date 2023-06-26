@@ -1,8 +1,6 @@
 package personal.bulletinborad.controller;
 
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -27,7 +25,7 @@ public class LoginController {
     @GetMapping("/login")
     public String loginForm(@ModelAttribute(LOGIN_FORM_KEY) LoginForm loginForm,
                             @ModelAttribute(EXCEPTION_MESSAGE_KEY) String message) {
-        return "loginForm";
+        return "login/loginForm";
     }
 
     @PostMapping("/login")

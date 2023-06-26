@@ -10,6 +10,7 @@ import personal.bulletinborad.entity.Member;
 import personal.bulletinborad.enumtype.Verification;
 import personal.bulletinborad.exception.ExceptionMessage;
 import personal.bulletinborad.exception.LoginException;
+import personal.bulletinborad.exception.NotMatchedPasswordException;
 import personal.bulletinborad.infrastructure.MemberRepository;
 import personal.bulletinborad.mock.FakeMailSender;
 import personal.bulletinborad.mock.FakeVerificationCodeRepository;
@@ -57,7 +58,7 @@ class LoginServiceTest {
 
         assertThat(member.getVerification()).isEqualTo(COMPLETE);
         assertThatThrownBy(() -> loginService.login("apple", "1233"))
-                .isInstanceOf(LoginException.class)
+                .isInstanceOf(NotMatchedPasswordException.class)
                 .hasMessage(NOT_MATCHED_PASSWORD);
     }
 
