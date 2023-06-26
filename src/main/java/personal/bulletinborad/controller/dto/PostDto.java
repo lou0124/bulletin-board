@@ -3,6 +3,8 @@ package personal.bulletinborad.controller.dto;
 import lombok.Data;
 import personal.bulletinborad.entity.Post;
 
+import java.util.List;
+
 @Data
 public class PostDto {
 
@@ -11,6 +13,7 @@ public class PostDto {
     private String content;
     private String writer;
     private String writtenDate;
+    public List<CommentDto> comments;
 
     public PostDto(Post post) {
         this.id = post.getId();
@@ -18,5 +21,9 @@ public class PostDto {
         this.content = post.getContent();
         this.writer = post.getMember().getNickname();
         this.writtenDate = post.formattedDate();
+        this.comments = post.getComments()
+                .stream()
+                .map(CommentDto::new)
+                .toList();
     }
 }

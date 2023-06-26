@@ -30,15 +30,15 @@
             <div th:class="content-wrapper" style="white-space: pre-line;" th:text="${post.content}"></div>
             <hr>
             <h6>댓글</h6>
-<!--            <ul>-->
-<!--                <li th:each="comment : ${post.comments}">-->
-<!--                    <div>-->
-<!--                        <span th:text="${comment.content}"></span>-->
-<!--                        <small class="text-muted">작성자: <span th:text="${comment.writer}"></span></small>-->
-<!--                    </div>-->
-<!--                    <hr>-->
-<!--                </li>-->
-<!--            </ul>-->
+            <ul>
+                <li th:each="comment : ${post.comments}">
+                    <div>
+                        <span th:text="${comment.content}"></span>
+                        <small class="text-muted">작성자: <span th:text="${comment.writer}"></span></small>
+                    </div>
+                    <hr>
+                </li>
+            </ul>
             <form th:action="@{/comments/add}" method="post">
                 <input type="hidden" name="postId" th:value="${post.id}">
                 <div class="form-group mb-4">

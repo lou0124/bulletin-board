@@ -43,6 +43,7 @@ public class PostController {
     @GetMapping("/{postId}")
     public String post(@PathVariable Long postId, Model model, HttpServletRequest request) {
         Member member = (Member) getLoginMember(request);
+        //TODO 쿼리 최적화 점검
         Optional<Post> optionalPost = postRepository.findById(postId);
         Post post = optionalPost.orElse(new Post("없는 게시물 입니다."));
         model.addAttribute("nickname", getNickname(member));

@@ -1,6 +1,7 @@
 package personal.bulletinborad.entity;
 
 import jakarta.persistence.*;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import personal.bulletinborad.entity.mapedsuperclass.BaseTime;
 
@@ -11,6 +12,7 @@ import static jakarta.persistence.FetchType.*;
 import static lombok.AccessLevel.*;
 
 @Entity
+@Getter
 @NoArgsConstructor(access = PROTECTED)
 public class Comment extends BaseTime {
 
@@ -35,4 +37,10 @@ public class Comment extends BaseTime {
 
     @OneToMany(mappedBy = "parent")
     private List<Comment> children = new ArrayList<>();
+
+    public Comment(String content, Member member, Post post) {
+        this.content = content;
+        this.member = member;
+        this.post = post;
+    }
 }
