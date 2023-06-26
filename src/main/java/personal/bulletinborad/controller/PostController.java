@@ -35,15 +35,17 @@ public class PostController {
         PageRequest pageRequest = PageRequest.of(page - 1, 10);
         Page<PostListDto> posts = postRepository.findAllPost(pageRequest)
                 .map(PostListDto::new);
-        model.addAttribute("nickname", getNickname(member));
+
         model.addAttribute("posts", posts);
         return "posts/list";
     }
 
     @GetMapping("/{postId}")
-    public String post(@PathVariable Long postId, Model model) {
+    public String post(@PathVariable Long postId, Model model, HttpServletRequest request) {
+        Member member = (Member) getLoginMember(request);
         Optional<Post> optionalPost = postRepository.findById(postId);
         Post post = optionalPost.orElse(new Post("없는 게시물 입니다."));
+        model.addAttribute("nickname", getNickname(member));
         model.addAttribute("post", new PostDto(post));
         return "posts/post";
     }

@@ -21,18 +21,6 @@
             margin-top: 20px;
             margin-bottom: 20px;
         }
-        .container-top-right {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            display: flex;
-            flex-direction: row;
-            align-items: flex-end;
-        }
-        .container-top-right .btn {
-            margin-bottom: 10px;
-            margin-right: 10px;
-        }
         .container-title {
             text-align: center;
             margin-top: 50px;
@@ -60,28 +48,30 @@
 
 <h1 class="container-title">게 시 판</h1>
 
-<div class="container-top-right">
-    <button type="button" class="btn btn-success btn-block" th:if="${nickname == null}" th:onclick="|location.href='@{/login}'|">
-        로그인
-    </button>
-    <button type="button" class="btn btn-primary btn-block" th:if="${nickname == null}" th:onclick="|location.href='@{/members/add}'|">
-        회원 가입
-    </button>
-</div>
+<div th:include="loginStatus"></div>
 
-<div class="container-top-right">
-    <div class="d-flex align-items-center">
-        <span th:if="${nickname != null}" style="margin-right: 10px;">
-            <span th:text="${nickname}" style="font-weight: bold;"></span>
-            <span>님 안녕하세요!</span>
-        </span>
-        <form method="post" th:if="${nickname != null}" th:action="@{/logout}">
-            <button type="submit" class="btn btn-primary btn-sm">
-                로그아웃
-            </button>
-        </form>
-    </div>
-</div>
+<!--<div class="container-top-right">-->
+<!--    <button type="button" class="btn btn-success btn-block" th:if="${nickname == null}" th:onclick="|location.href='@{/login}'|">-->
+<!--        로그인-->
+<!--    </button>-->
+<!--    <button type="button" class="btn btn-primary btn-block" th:if="${nickname == null}" th:onclick="|location.href='@{/members/add}'|">-->
+<!--        회원 가입-->
+<!--    </button>-->
+<!--</div>-->
+
+<!--<div class="container-top-right">-->
+<!--    <div class="d-flex align-items-center">-->
+<!--        <span th:if="${nickname != null}" style="margin-right: 10px;">-->
+<!--            <span th:text="${nickname}" style="font-weight: bold;"></span>-->
+<!--            <span>님 안녕하세요!</span>-->
+<!--        </span>-->
+<!--        <form method="post" th:if="${nickname != null}" th:action="@{/logout}">-->
+<!--            <button type="submit" class="btn btn-primary btn-sm">-->
+<!--                로그아웃-->
+<!--            </button>-->
+<!--        </form>-->
+<!--    </div>-->
+<!--</div>-->
 
 <div class="container container-center">
     <table class="table">
