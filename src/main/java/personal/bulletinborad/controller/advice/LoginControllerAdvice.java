@@ -25,7 +25,12 @@ public class LoginControllerAdvice {
             LoginForm loginForm = new LoginForm(request.getParameter("loginId"));
             attributes.addFlashAttribute(LOGIN_FORM_KEY, loginForm);
         }
-
-        return "redirect:/login";
+        String path = request.getRequestURI();
+        String queryString = request.getQueryString();
+        if (queryString != null) {
+            path += "?" + queryString;
+        }
+        
+        return "redirect:" + path;
     }
 }
