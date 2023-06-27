@@ -19,7 +19,9 @@ public class CommentController {
     private final CommentService commentService;
 
     @PostMapping("/add")
-    public String write(@RequestParam Long postId, @RequestParam String content, HttpServletRequest request) {
+    public String write(@RequestParam Long postId,
+                        @RequestParam String content,
+                        HttpServletRequest request) {
 
         Member member = (Member) getLoginMember(request);
         if (member == null) {
@@ -31,7 +33,18 @@ public class CommentController {
     }
 
     @PostMapping("/addReply")
-    public String addReply() {
-        return "posts/list";
+    public String addReply(@RequestParam Long postId,
+                           @RequestParam Long commentId,
+                           @RequestParam String content,
+                           HttpServletRequest request) {
+        Member member = (Member) getLoginMember(request);
+        if (member == null) {
+            return "redirect:/login?redirectPath=/posts/" + postId;
+        }
+
+        System.out.println("postId = " + postId);
+        System.out.println("commentId = " + commentId);
+        System.out.println("content = " + content);
+        return "redirect:/posts/" + postId;
     }
 }
