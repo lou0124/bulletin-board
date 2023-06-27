@@ -42,7 +42,7 @@ public class TestDataInit {
     }
 
     private void addComment(Member member1, Member member2, int i, Post post) {
-        for (int j = 0; j <= 20; j++) {
+        for (int j = 1; j <= 20; j++) {
             if (j % 2 == 0) {
                 commentRepository.save(new Comment("content" + j, member1, post));
             } else {
