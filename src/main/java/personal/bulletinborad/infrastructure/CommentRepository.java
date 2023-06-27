@@ -10,7 +10,6 @@ import personal.bulletinborad.entity.Post;
 
 public interface CommentRepository extends JpaRepository<Comment, Long> {
 
-    @Query(value = "select c from Comment c join fetch c.member m where c.post = :post order by c.createdDate desc ",
-            countQuery = "select count(c) from Comment c")
+    @Query("select c from Comment c join fetch c.member m where c.post = :post order by c.createdDate desc ")
     Page<Comment> findByPost(Pageable pageable, @Param("post") Post post);
 }
