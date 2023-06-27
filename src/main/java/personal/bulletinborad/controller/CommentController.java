@@ -42,9 +42,7 @@ public class CommentController {
             return "redirect:/login?redirectPath=/posts/" + postId;
         }
 
-        System.out.println("postId = " + postId);
-        System.out.println("commentId = " + commentId);
-        System.out.println("content = " + content);
+        commentService.addReply(member, postId, commentId, content);
         return "redirect:/posts/" + postId;
     }
 }

@@ -43,4 +43,9 @@ public class Comment extends BaseTime {
         this.member = member;
         this.post = post;
     }
+
+    public void addReply(Comment reply) {
+        children.add(reply);
+        reply.parent = this;
+    }
 }
