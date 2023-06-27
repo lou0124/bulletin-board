@@ -74,7 +74,7 @@
                         <form th:action="@{/comments/addReply}" method="post">
                             <input type="hidden" name="commentId" th:value="${comment.id}">
                             <div>
-                                <textarea class="form-control" name="replyContent" rows="2" required></textarea>
+                                <textarea class="form-control" name="replyContent" rows="2" required placeholder="로그인은 필수 입니다."></textarea>
                             </div>
                             <br>
                             <div class="text-right">
