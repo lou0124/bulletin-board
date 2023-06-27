@@ -30,7 +30,7 @@ public class LoginControllerAdvice {
         if (queryString != null) {
             path += "?" + queryString;
         }
-        
+
         return "redirect:" + path;
     }
 }
