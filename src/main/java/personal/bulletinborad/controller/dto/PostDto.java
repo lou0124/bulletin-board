@@ -1,6 +1,7 @@
 package personal.bulletinborad.controller.dto;
 
 import lombok.Data;
+import org.springframework.data.domain.Page;
 import personal.bulletinborad.entity.Post;
 
 import java.util.List;
@@ -13,17 +14,14 @@ public class PostDto {
     private String content;
     private String writer;
     private String writtenDate;
-    public List<CommentDto> comments;
+    private Page<CommentDto> comments;
 
-    public PostDto(Post post) {
+    public PostDto(Post post, Page<CommentDto> comments) {
         this.id = post.getId();
         this.title = post.getTitle();
         this.content = post.getContent();
         this.writer = post.getMember().getNickname();
         this.writtenDate = post.formattedDate();
-        this.comments = post.getComments()
-                .stream()
-                .map(CommentDto::new)
-                .toList();
+        this.comments = comments;
     }
 }

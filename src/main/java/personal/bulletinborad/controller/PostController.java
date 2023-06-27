@@ -6,19 +6,23 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import personal.bulletinborad.controller.dto.CommentDto;
 import personal.bulletinborad.controller.dto.PostDto;
 import personal.bulletinborad.controller.dto.PostListDto;
 import personal.bulletinborad.controller.form.PostForm;
+import personal.bulletinborad.entity.Comment;
 import personal.bulletinborad.entity.Member;
 import personal.bulletinborad.entity.Post;
+import personal.bulletinborad.infrastructure.CommentRepository;
 import personal.bulletinborad.infrastructure.PostRepository;
 
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
-import static personal.bulletinborad.controller.AttributeNameConst.SESSION_MEMBER;
 import static personal.bulletinborad.controller.Util.LoginMemberGetter.getLoginMember;
 
 @Slf4j
@@ -28,6 +32,7 @@ import static personal.bulletinborad.controller.Util.LoginMemberGetter.getLoginM
 public class PostController {
 
     private final PostRepository postRepository;
+    private final CommentRepository commentRepository;
 
     @GetMapping
     public String posts(@RequestParam(defaultValue = "1") Integer page, Model model, HttpServletRequest request) {
@@ -45,9 +50,14 @@ public class PostController {
         Member member = (Member) getLoginMember(request);
         //TODO 쿼리 최적화 점검
         Optional<Post> optionalPost = postRepository.findById(postId);
-        Post post = optionalPost.orElse(new Post("없는 게시물 입니다."));
+        Post post = optionalPost.orElseThrow(NoSuchElementException::new);
+
+        PageRequest pageRequest = PageRequest.of( 0, 10);
+        Page<CommentDto> comments = commentRepository.findByPost(pageRequest, post).map(CommentDto::new);
+        PostDto postDto = new PostDto(post, comments);
+
         model.addAttribute("nickname", getNickname(member));
-        model.addAttribute("post", new PostDto(post));
+        model.addAttribute("post", postDto);
         return "posts/post";
     }
 
