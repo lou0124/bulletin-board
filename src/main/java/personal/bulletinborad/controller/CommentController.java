@@ -29,4 +29,9 @@ public class CommentController {
         commentService.write(member, postId, content);
         return "redirect:/posts/" + postId + "?page=1";
     }
+
+    @PostMapping("/addReply")
+    public String addReply() {
+        return "posts/list";
+    }
 }

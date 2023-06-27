@@ -13,6 +13,21 @@
         ul {
             list-style: none;
         }
+        .comment-button {
+            background: none;
+            border: none;
+            padding: 0;
+            font: inherit;
+            cursor: pointer;
+            outline: inherit;
+        }
+        .comment-button:hover {
+            text-decoration: none;
+        }
+        .text-right {
+            display: flex;
+            justify-content: flex-end;
+        }
     </style>
 </head>
 <body>
@@ -51,12 +66,40 @@
                 <li th:each="comment : ${post.comments}">
                     <div>
                         <small class="text-muted"><span th:text="${comment.writer}"></span>: </small>
-                        <span th:text="${comment.content}"></span>
+                        <button class="comment-button" th:text="${comment.content}" th:onclick="toggleReplyForm('replyForm-' + [[${comment.id}]])"></button>
+                    </div>
 
+                    <div th:id="${'replyForm-' + comment.id}" style="display: none;">
+                        <br>
+                        <form th:action="@{/comments/addReply}" method="post">
+                            <input type="hidden" name="commentId" th:value="${comment.id}">
+                            <div>
+                                <textarea class="form-control" name="replyContent" rows="2" required></textarea>
+                            </div>
+                            <br>
+                            <div class="text-right">
+                                <button type="submit" class="btn btn-sm btn-primary">작성</button>
+                            </div>
+                        </form>
                     </div>
                     <hr>
                 </li>
             </ul>
+
+            <script>
+                function toggleReplyForm(formId) {
+                    const replyForm = document.getElementById(formId);
+                    const allForms = document.querySelectorAll('[id^="replyForm-"]');
+
+                    allForms.forEach((form) => {
+                        if (form.id === formId) {
+                            replyForm.style.display = replyForm.style.display === 'none' ? 'block' : 'none';
+                        } else {
+                            form.style.display = 'none';
+                        }
+                    });
+                }
+            </script>
             <nav style="text-align: center;">
                 <ul class="pagination"
                     th:with="start=${T(java.lang.Math).floor(post.comments.number/10)*10 + 1},
