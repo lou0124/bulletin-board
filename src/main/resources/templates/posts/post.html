@@ -10,6 +10,9 @@
             word-break: break-all;
             min-height: 400px;
         }
+        ul {
+            list-style: none;
+        }
     </style>
 </head>
 <body>
@@ -46,8 +49,9 @@
             <ul>
                 <li th:each="comment : ${post.comments}">
                     <div>
+                        <small class="text-muted"><span th:text="${comment.writer}"></span>: </small>
                         <span th:text="${comment.content}"></span>
-                        <small class="text-muted">작성자: <span th:text="${comment.writer}"></span></small>
+
                     </div>
                     <hr>
                 </li>
@@ -55,7 +59,7 @@
             <nav style="text-align: center;">
                 <ul class="pagination"
                     th:with="start=${T(java.lang.Math).floor(post.comments.number/10)*10 + 1},
-                last=(${start + 9 < post.comments.totalPages ? start + 9 : post.comments.totalPages})">
+                    last=(${start + 9 < post.comments.totalPages ? start + 9 : post.comments.totalPages})">
                     <li th:class="page-item">
                         <a th:href="@{${url}(page=1)}" aria-label="First" th:class="page-link">
                             <span aria-hidden="true">First</span>
