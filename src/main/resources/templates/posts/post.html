@@ -13,7 +13,20 @@
     </style>
 </head>
 <body>
+<script>
+    window.addEventListener('load', function() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const hasParams = urlParams.toString() !== '';
 
+        if (hasParams) {
+            scrollToBottom();
+        }
+    });
+
+    function scrollToBottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+</script>
 <div th:insert="~{login/loginStatus}"></div>
 
 <div class="container">
@@ -55,7 +68,7 @@
                     </li>
 
                     <li th:each="page: ${#numbers.sequence(start, last)}" th:class="${page == post.comments.number + 1} ? 'active page-item' : 'page-item'">
-                        <a th:text="${page}" th:href="@{${url}(page=${page})}" class="page-link" l></a>
+                        <a th:text="${page}" th:href="@{${url}(page=${page})}" class="page-link"></a>
                     </li>
 
                     <li th:class="${post.comments.last} ? 'disabled page-item' : 'page-item'">
@@ -75,7 +88,7 @@
                 <input type="hidden" name="postId" th:value="${post.id}">
                 <div class="form-group mb-4">
                     <label for="content">댓글 쓰기</label>
-                    <textarea class="form-control" id="content" name="content" rows="3" required></textarea>
+                    <textarea class="form-control" id="content" name="content" rows="3" required placeholder="로그인은 필수 입니다."></textarea>
                 </div>
                 <div class="text-center">
                     <button type="submit" class="btn btn-primary">댓글 등록</button>
