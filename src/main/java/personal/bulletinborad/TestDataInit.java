@@ -5,8 +5,10 @@ import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.annotation.Profile;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
+import personal.bulletinborad.entity.Comment;
 import personal.bulletinborad.entity.Member;
 import personal.bulletinborad.entity.Post;
+import personal.bulletinborad.infrastructure.CommentRepository;
 import personal.bulletinborad.infrastructure.MemberRepository;
 import personal.bulletinborad.infrastructure.PostRepository;
 
@@ -17,6 +19,7 @@ public class TestDataInit {
 
     private final MemberRepository memberRepository;
     private final PostRepository postRepository;
+    private final CommentRepository commentRepository;
 
     @EventListener(ApplicationReadyEvent.class)
     public void initData() {
@@ -28,10 +31,22 @@ public class TestDataInit {
         memberRepository.save(member2);
 
         for (int i = 1; i <= 200; i++) {
+            Post post;
             if (i % 2 == 0) {
-                postRepository.save(new Post(member1, null, "title" + i, "content" + i, 0, null));
+                post = postRepository.save(new Post(member1, null, "title" + i, "content" + i, 0, null));
             } else {
-                postRepository.save(new Post(member2, null, "title" + i, "content" + i, 0, null));
+                post = postRepository.save(new Post(member2, null, "title" + i, "content" + i, 0, null));
+            }
+            addComment(member1, member2, i, post);
+        }
+    }
+
+    private void addComment(Member member1, Member member2, int i, Post post) {
+        for (int j = 0; j <= 20; j++) {
+            if (j % 2 == 0) {
+                commentRepository.save(new Comment("content" + j, member1, post));
+            } else {
+                commentRepository.save(new Comment("content" + j, member2, post));
             }
         }
     }
