@@ -86,15 +86,6 @@ public class PostController {
         return "redirect:/posts";
     }
 
-//    private Member getLoginMember(HttpServletRequest request) {
-//        HttpSession session = request.getSession(false);
-//        if (session == null) {
-//            return null;
-//        }
-//
-//        return (Member) session.getAttribute(SESSION_MEMBER);
-//    }
-
     private String getNickname(Member member) {
         return member != null ? member.getNickname() : null;
     }
