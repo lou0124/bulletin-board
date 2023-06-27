@@ -46,13 +46,16 @@ public class PostController {
     }
 
     @GetMapping("/{postId}")
-    public String post(@PathVariable Long postId, Model model, HttpServletRequest request) {
+    public String post(@RequestParam(defaultValue = "1") Integer page,
+                       @PathVariable Long postId,
+                       Model model,
+                       HttpServletRequest request) {
         Member member = (Member) getLoginMember(request);
-        //TODO 쿼리 최적화 점검
+
         Optional<Post> optionalPost = postRepository.findById(postId);
         Post post = optionalPost.orElseThrow(NoSuchElementException::new);
 
-        PageRequest pageRequest = PageRequest.of( 0, 10);
+        PageRequest pageRequest = PageRequest.of( page - 1, 10);
         Page<CommentDto> comments = commentRepository.findByPost(pageRequest, post).map(CommentDto::new);
         PostDto postDto = new PostDto(post, comments);
 

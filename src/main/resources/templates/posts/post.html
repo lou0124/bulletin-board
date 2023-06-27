@@ -39,6 +39,38 @@
                     <hr>
                 </li>
             </ul>
+            <nav style="text-align: center;">
+                <ul class="pagination"
+                    th:with="start=${T(java.lang.Math).floor(post.comments.number/10)*10 + 1},
+                last=(${start + 9 < post.comments.totalPages ? start + 9 : post.comments.totalPages})">
+                    <li th:class="page-item">
+                        <a th:href="@{${url}(page=1)}" aria-label="First" th:class="page-link">
+                            <span aria-hidden="true">First</span>
+                        </a>
+                    </li>
+                    <li th:class="${post.comments.first} ? 'disabled page-item' : 'page-item'">
+                        <a th:href="${post.comments.first} ? '#' : @{${url}(page=${post.comments.number})}" aria-label="Previous" th:class="page-link">
+                            <span aria-hidden="true">&lt;</span>
+                        </a>
+                    </li>
+
+                    <li th:each="page: ${#numbers.sequence(start, last)}" th:class="${page == post.comments.number + 1} ? 'active page-item' : 'page-item'">
+                        <a th:text="${page}" th:href="@{${url}(page=${page})}" class="page-link" l></a>
+                    </li>
+
+                    <li th:class="${post.comments.last} ? 'disabled page-item' : 'page-item'">
+                        <a th:href="${post.comments.last} ? '#' : @{${url}(page=${post.comments.number + 2})}" aria-label="Next" th:class="page-link">
+                            <span aria-hidden="true">&gt;</span>
+                        </a>
+                    </li>
+
+                    <li th:class="page-item">
+                        <a th:href="@{${url}(page=${post.comments.totalPages})}" aria-label="Last" th:class="page-link">
+                            <span aria-hidden="true">Last</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
             <form th:action="@{/comments/add}" method="post">
                 <input type="hidden" name="postId" th:value="${post.id}">
                 <div class="form-group mb-4">
