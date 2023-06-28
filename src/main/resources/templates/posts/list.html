@@ -62,15 +62,17 @@
         <thead>
         <thead>
         <tr>
+            <th style="width: 5%;">글번호</th>
             <th style="width: 60%;">제목</th>
-            <th style="width: 20%;">닉네임</th>
+            <th style="width: 15%;">닉네임</th>
             <th style="width: 20%;">작성일</th>
         </tr>
         </thead>
         </thead>
         <tbody>
         <tr th:each="post : ${posts}">
-            <td><a href="posts.html" th:href="@{/posts/{postId}(postId=${post.id})}" th:text="${post.title}" class="post-link">제목</a></td>
+            <td th:text="${post.id}">글번호</td>
+            <td><a href="posts.html" th:href="@{/posts/{postId}(postId=${post.id})}" th:text="${post.title}" class="post-link fw-bolder">제목</a></td>
             <td th:text="${post.writer}">닉네임</td>
             <td th:text="${post.writtenDate}">작성일</td>
         </tr>
