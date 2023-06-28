@@ -12,22 +12,6 @@ public class CommentDto {
     private String writer;
     private List<CommentDto> replies;
 
-    private CommentDto() {
-    }
-
-//    public CommentDto(Comment comment) {
-//        this.id = comment.getId();
-//        this.content = comment.getContent();
-//        this.writer = comment.getMember().getNickname();
-//        comment.getChildren().stream().map(c -> {
-//            CommentDto commentDto = new CommentDto();
-//            commentDto.setId(c.getId());
-//            commentDto.setContent(c.getContent());
-//            commentDto.setWriter(c.getMember().getNickname());
-//            return commentDto;
-//        });
-//    }
-
     public static CommentDto createCommentDto(Comment comment) {
         CommentDto commentDto = createBasicDto(comment);
         commentDto.setReplies(
