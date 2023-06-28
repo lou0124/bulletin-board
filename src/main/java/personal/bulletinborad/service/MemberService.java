@@ -14,6 +14,7 @@ import personal.bulletinborad.infrastructure.VerificationCodeRepository;
 import personal.bulletinborad.infrastructure.VerificationMailSender;
 
 import java.io.UnsupportedEncodingException;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import static personal.bulletinborad.enumtype.Verification.*;
@@ -63,6 +64,12 @@ public class MemberService {
 
         member.verify();
         return true;
+    }
+
+    public void resendMessage(Long memberId) {
+        Optional<Member> optionalMember = memberRepository.findById(memberId);
+        Member member = optionalMember.orElseThrow(NoSuchElementException::new);
+        sendMessage(member.getEmail());
     }
 
     private void checkExist(String s1, String s2, String message) {

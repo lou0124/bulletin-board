@@ -53,7 +53,9 @@ public class MemberController {
             log.info("memberId = {} code = {} 인증 성공", memberId);
             return "redirect:/login?redirectPath=" + redirectPath;
         }
-        attributes.addFlashAttribute(EXCEPTION_MESSAGE_KEY, "인증에 실패 하였습니다.");
+
+        attributes.addFlashAttribute(EXCEPTION_MESSAGE_KEY, "인증에 실패 하였습니다. 인증코드를 다시 전송합니다.");
+        memberService.resendMessage(memberId);
         return "redirect:" + request.getRequestURI();
     }
 }
