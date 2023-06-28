@@ -24,10 +24,14 @@ import static org.assertj.core.api.Assertions.*;
 @Transactional
 class CommentServiceTest {
 
-    @Autowired CommentService commentService;
-    @Autowired MemberRepository memberRepository;
-    @Autowired PostRepository postRepository;
-    @Autowired CommentRepository commentRepository;
+    @Autowired
+    CommentService commentService;
+    @Autowired
+    MemberRepository memberRepository;
+    @Autowired
+    PostRepository postRepository;
+    @Autowired
+    CommentRepository commentRepository;
 
     Member member = new Member("loginId", "password", "email@email.com", "nickname");
     Post post = new Post(member, null, "title", "content", 0, null);
@@ -44,7 +48,13 @@ class CommentServiceTest {
         Comment comment = commentRepository.findById(commentId).get();
         assertThat(commentId).isEqualTo(comment.getId());
     }
-    
+
+    @Test
+    void write_시_post없는경우_예외처리() {
+        assertThatThrownBy(() -> commentService.write(member, 999L, "commentContent"))
+                .isInstanceOf(NoSuchElementException.class);
+    }
+
     @Test
     void 대댓글_쓰기_성공() {
         Long commentId = commentService.write(member, post.getId(), "commentContent");
@@ -55,5 +65,18 @@ class CommentServiceTest {
         assertThat(reply.getId()).isEqualTo(replyId);
         assertThat(reply.getParent()).isEqualTo(comment);
         assertThat(comment.getChildren()).containsExactly(reply);
+    }
+
+    @Test
+    void addReply_시_post없는경우_예외처리() {
+        Long commentId = commentService.write(member, post.getId(), "commentContent");
+        assertThatThrownBy(() -> commentService.addReply(member, 999L, commentId, "replyContent"))
+                .isInstanceOf(NoSuchElementException.class);
+    }
+
+    @Test
+    void addReply_시_comment없는경우_예외처리() {
+        assertThatThrownBy(() -> commentService.addReply(member, post.getId(), 999L, "replyContent"))
+                .isInstanceOf(NoSuchElementException.class);
     }
 }
