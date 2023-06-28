@@ -1,10 +1,8 @@
-package personal.bulletinborad.controller.dto;
+package personal.bulletinborad.dto;
 
 import lombok.Data;
 import org.springframework.data.domain.Page;
 import personal.bulletinborad.entity.Post;
-
-import java.util.List;
 
 @Data
 public class PostDto {

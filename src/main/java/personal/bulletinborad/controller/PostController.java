@@ -4,22 +4,14 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import personal.bulletinborad.controller.dto.CommentDto;
-import personal.bulletinborad.controller.dto.PostDto;
-import personal.bulletinborad.controller.dto.PostListDto;
+import personal.bulletinborad.dto.PostDto;
+import personal.bulletinborad.dto.PostListDto;
 import personal.bulletinborad.controller.form.PostForm;
 import personal.bulletinborad.entity.Member;
-import personal.bulletinborad.entity.Post;
-import personal.bulletinborad.infrastructure.CommentRepository;
-import personal.bulletinborad.infrastructure.PostRepository;
 import personal.bulletinborad.service.PostService;
-
-import java.util.NoSuchElementException;
-import java.util.Optional;
 
 import static personal.bulletinborad.controller.Util.LoginMemberGetter.getLoginMember;
 

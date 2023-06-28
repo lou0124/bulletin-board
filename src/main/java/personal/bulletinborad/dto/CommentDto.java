@@ -1,4 +1,4 @@
-package personal.bulletinborad.controller.dto;
+package personal.bulletinborad.dto;
 
 import lombok.Data;
 import personal.bulletinborad.entity.Comment;
