@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.annotation.Profile;
 import org.springframework.context.event.EventListener;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import personal.bulletinborad.entity.Comment;
 import personal.bulletinborad.entity.Member;
@@ -17,14 +18,15 @@ import personal.bulletinborad.infrastructure.PostRepository;
 @RequiredArgsConstructor
 public class TestDataInit {
 
+    private final PasswordEncoder passwordEncoder;
     private final MemberRepository memberRepository;
     private final PostRepository postRepository;
     private final CommentRepository commentRepository;
 
     @EventListener(ApplicationReadyEvent.class)
     public void initData() {
-        Member member1 = new Member("test", "1234", "abc@naver.com", "apple");
-        Member member2 = new Member("test2", "1234", "abc2@naver.com", "banana");
+        Member member1 = new Member("test", passwordEncoder.encode("1234"), "abc@naver.com", "apple");
+        Member member2 = new Member("test2", passwordEncoder.encode("1234"), "abc2@naver.com", "banana");
         member1.verify();
         member2.verify();
         memberRepository.save(member1);
