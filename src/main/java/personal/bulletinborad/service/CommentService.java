@@ -31,7 +31,7 @@ public class CommentService {
     }
 
     @Transactional
-    public void addReply(Member member, Long postId, Long commentId, String content) {
+    public Long addReply(Member member, Long postId, Long commentId, String content) {
         Optional<Post> optionalPost = postRepository.findById(postId);
         Post post = optionalPost.orElseThrow(NoSuchElementException::new);
 
@@ -40,7 +40,8 @@ public class CommentService {
 
         Comment reply = new Comment(content, member, post);
         comment.addReply(reply);
-        Comment save = commentRepository.save(reply);
-        log.info("id = {}",save.getId());
+        commentRepository.save(reply);
+
+        return reply.getId();
     }
 }

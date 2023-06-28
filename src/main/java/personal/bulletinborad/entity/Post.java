@@ -43,11 +43,12 @@ public class Post extends BaseTime {
     @OneToMany(mappedBy = "post", orphanRemoval = true)
     private List<File> files = new ArrayList<>();
 
-    public Post(String title) {
-        this.title = title;
-    }
-
-    public Post(Member member, Category category, String title, String content, Integer likeCount, List<File> files) {
+    public Post(Member member,
+                Category category,
+                String title,
+                String content,
+                Integer likeCount,
+                List<File> files) {
         this.member = member;
         this.category = category;
         this.title = title;
