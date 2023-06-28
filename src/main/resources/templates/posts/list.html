@@ -26,6 +26,13 @@
             margin-top: 50px;
             margin-bottom: 20px;
         }
+        .post-link {
+            color: black;
+            text-decoration: none;
+        }
+        .post-link:hover {
+            text-decoration: underline;
+        }
     </style>
     <script>
         window.addEventListener('DOMContentLoaded', (event) => {
@@ -63,7 +70,7 @@
         </thead>
         <tbody>
         <tr th:each="post : ${posts}">
-            <td><a href="posts.html" th:href="@{/posts/{postId}(postId=${post.id})}" th:text="${post.title}">제목</a></td>
+            <td><a href="posts.html" th:href="@{/posts/{postId}(postId=${post.id})}" th:text="${post.title}" class="post-link">제목</a></td>
             <td th:text="${post.writer}">닉네임</td>
             <td th:text="${post.writtenDate}">작성일</td>
         </tr>
