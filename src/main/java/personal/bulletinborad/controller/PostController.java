@@ -1,12 +1,10 @@
 package personal.bulletinborad.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -14,7 +12,6 @@ import personal.bulletinborad.controller.dto.CommentDto;
 import personal.bulletinborad.controller.dto.PostDto;
 import personal.bulletinborad.controller.dto.PostListDto;
 import personal.bulletinborad.controller.form.PostForm;
-import personal.bulletinborad.entity.Comment;
 import personal.bulletinborad.entity.Member;
 import personal.bulletinborad.entity.Post;
 import personal.bulletinborad.infrastructure.CommentRepository;
@@ -65,7 +62,7 @@ public class PostController {
     }
 
     @GetMapping("/add")
-    public String addForm(@ModelAttribute PostForm postForm, HttpServletRequest request, Model model) {
+    public String addForm(@ModelAttribute PostForm postForm, HttpServletRequest request) {
         Member member = (Member) getLoginMember(request);
         if (member == null) {
             return "redirect:/login";
