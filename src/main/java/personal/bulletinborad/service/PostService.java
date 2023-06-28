@@ -8,7 +8,6 @@ import org.springframework.transaction.annotation.Transactional;
 import personal.bulletinborad.dto.CommentDto;
 import personal.bulletinborad.dto.PostDto;
 import personal.bulletinborad.dto.PostListDto;
-import personal.bulletinborad.entity.Comment;
 import personal.bulletinborad.entity.Member;
 import personal.bulletinborad.entity.Post;
 import personal.bulletinborad.infrastructure.CommentRepository;
