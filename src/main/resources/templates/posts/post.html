@@ -28,6 +28,16 @@
             display: flex;
             justify-content: flex-end;
         }
+        .reply {
+            margin-left: 20px;
+            padding: 10px;
+            /*border: 1px solid #ccc;*/
+            background-color: #f9f9f9;
+        }
+        .reply-info {
+            margin-bottom: 5px;
+        }
+
     </style>
 </head>
 <body>
@@ -86,6 +96,19 @@
                             </div>
                         </form>
                     </div>
+                    <br>
+                    <ul>
+                        <li th:each="reply : ${comment.replies}">
+                            <div class="reply">
+                                <div class="reply-info">
+                                    <small class="text-muted"><span th:text="${reply.writer}"></span>: </small>
+                                </div>
+                                <div class="reply-content">
+                                    <span th:text="${reply.content}"></span>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
                     <hr>
                 </li>
             </ul>
