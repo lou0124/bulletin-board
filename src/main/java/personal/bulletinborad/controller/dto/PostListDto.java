@@ -3,8 +3,6 @@ package personal.bulletinborad.controller.dto;
 import lombok.Data;
 import personal.bulletinborad.entity.Post;
 
-import java.time.LocalDateTime;
-
 @Data
 public class PostListDto {
 
