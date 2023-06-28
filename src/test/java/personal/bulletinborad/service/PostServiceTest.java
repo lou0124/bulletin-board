@@ -19,7 +19,7 @@ import static org.assertj.core.api.Assertions.*;
 
 /***
  *
- * 많은 개선 필요
+ * 임시 작성
  */
 
 @SpringBootTest
