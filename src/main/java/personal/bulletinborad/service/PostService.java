@@ -39,13 +39,6 @@ public class PostService {
         Page<CommentDto> comments = commentRepository.findByPost(pageRequest, post)
                 .map(CommentDto::createCommentDto);
 
-        for (CommentDto comment : comments) {
-            System.out.println("parent = " + comment.getId());
-            for (CommentDto commentDto : comment.getReplies()) {
-                System.out.println("child= " + commentDto.getId());
-            }
-        }
-
         return new PostDto(post, comments);
     }
 
