@@ -2,6 +2,7 @@ package personal.bulletinborad.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import personal.bulletinborad.entity.Member;
@@ -21,6 +22,7 @@ import static personal.bulletinborad.exception.ExceptionMessage.*;
 public class LoginService {
 
     private final MemberRepository memberRepository;
+    private final PasswordEncoder passwordEncoder;
 
     public Member login(String loginId, String password) {
         Optional<Member> optionalMember = memberRepository.findByLoginId(loginId);
@@ -35,7 +37,8 @@ public class LoginService {
             throw new LoginException(NOT_VERIFY);
         }
 
-        if (!member.isMatchedPassword(password)) {
+        if (!passwordEncoder.matches(password, member.getPassword())) {
+            log.info("{}: 잘못된 패스워드 입력 = {}", loginId, password);
             throw new NotMatchedPasswordException(NOT_MATCHED_PASSWORD);
         }
 

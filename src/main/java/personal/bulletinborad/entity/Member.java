@@ -53,10 +53,6 @@ public class Member extends BaseTime {
     }
 
     public boolean isVerified() {
-        return getVerification() == Verification.COMPLETE ? true : false;
-    }
-
-    public boolean isMatchedPassword(String password) {
-        return getPassword().equals(password);
+        return getVerification() == Verification.COMPLETE;
     }
 }

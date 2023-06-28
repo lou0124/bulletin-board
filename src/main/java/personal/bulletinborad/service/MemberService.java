@@ -3,6 +3,7 @@ package personal.bulletinborad.service;
 import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import personal.bulletinborad.entity.Member;
@@ -27,6 +28,7 @@ public class MemberService {
     private final MemberRepository memberRepository;
     private final VerificationMailSender mailSender;
     private final VerificationCodeRepository verificationCodeRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Transactional
     public Long join(String loginId, String password, String email, String nickname) {
@@ -38,7 +40,9 @@ public class MemberService {
             checkExist(member.getNickname(), nickname, EXIST_NICKNAME);
         });
 
-        Member savedMember = memberRepository.save(new Member(loginId, password, email, nickname));
+        Member savedMember = memberRepository.save(
+                new Member(loginId, passwordEncoder.encode(password), email, nickname));
+
         log.info("로그인 가입요청 완료 = {}", loginId);
 
         sendMessage(email);
