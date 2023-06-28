@@ -16,6 +16,7 @@ import personal.bulletinborad.entity.Member;
 import personal.bulletinborad.entity.Post;
 import personal.bulletinborad.infrastructure.CommentRepository;
 import personal.bulletinborad.infrastructure.PostRepository;
+import personal.bulletinborad.service.PostService;
 
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -28,15 +29,14 @@ import static personal.bulletinborad.controller.Util.LoginMemberGetter.getLoginM
 @RequestMapping("/posts")
 public class PostController {
 
-    private final PostRepository postRepository;
-    private final CommentRepository commentRepository;
+    private final PostService postService;
 
     @GetMapping
     public String posts(@RequestParam(defaultValue = "1") Integer page, Model model, HttpServletRequest request) {
+
         Member member = (Member) getLoginMember(request);
-        PageRequest pageRequest = PageRequest.of(page - 1, 10);
-        Page<PostListDto> posts = postRepository.findAllPost(pageRequest)
-                .map(PostListDto::new);
+        Page<PostListDto> posts = postService.getPosts(page);
+
         model.addAttribute("nickname", getNickname(member));
         model.addAttribute("posts", posts);
         return "posts/list";
@@ -47,17 +47,12 @@ public class PostController {
                        @PathVariable Long postId,
                        Model model,
                        HttpServletRequest request) {
+
         Member member = (Member) getLoginMember(request);
-
-        Optional<Post> optionalPost = postRepository.findById(postId);
-        Post post = optionalPost.orElseThrow(NoSuchElementException::new);
-
-        PageRequest pageRequest = PageRequest.of( page - 1, 10);
-        Page<CommentDto> comments = commentRepository.findByPost(pageRequest, post).map(CommentDto::new);
-        PostDto postDto = new PostDto(post, comments);
+        PostDto post = postService.getPost(page, postId);
 
         model.addAttribute("nickname", getNickname(member));
-        model.addAttribute("post", postDto);
+        model.addAttribute("post", post);
         return "posts/post";
     }
 
@@ -76,10 +71,7 @@ public class PostController {
         if (member == null) {
             return "redirect:/login";
         }
-
-        Post post = new Post(member, null, form.getTitle(), form.getContent(), 0, null);
-        postRepository.save(post);
-
+        postService.write(member, form.getTitle(), form.getContent());
         return "redirect:/posts";
     }
 
