@@ -4,12 +4,14 @@ import jakarta.annotation.PostConstruct;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 import personal.bulletinborad.entity.Member;
 import personal.bulletinborad.enumtype.Verification;
 import personal.bulletinborad.exception.ExistMemberException;
 import personal.bulletinborad.infrastructure.MemberRepository;
 import personal.bulletinborad.mock.FakeMailSender;
+import personal.bulletinborad.mock.FakePasswordEncoder;
 import personal.bulletinborad.mock.FakeVerificationCodeRepository;
 
 import static org.assertj.core.api.Assertions.*;
@@ -29,7 +31,12 @@ class MemberServiceTest {
 
     @PostConstruct
     void postConstruct() {
-        memberService = new MemberService(memberRepository, new FakeMailSender(), new FakeVerificationCodeRepository());
+        memberService = new MemberService(
+                memberRepository,
+                new FakeMailSender(),
+                new FakeVerificationCodeRepository(),
+                new FakePasswordEncoder()
+        );
     }
 
     @Test

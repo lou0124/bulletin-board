@@ -13,6 +13,7 @@ import personal.bulletinborad.exception.LoginException;
 import personal.bulletinborad.exception.NotMatchedPasswordException;
 import personal.bulletinborad.infrastructure.MemberRepository;
 import personal.bulletinborad.mock.FakeMailSender;
+import personal.bulletinborad.mock.FakePasswordEncoder;
 import personal.bulletinborad.mock.FakeVerificationCodeRepository;
 
 import static org.assertj.core.api.Assertions.*;
@@ -29,7 +30,12 @@ class LoginServiceTest {
 
     @PostConstruct
     void postConstruct() {
-        memberService = new MemberService(memberRepository, new FakeMailSender(), new FakeVerificationCodeRepository());
+        FakePasswordEncoder passwordEncoder = new FakePasswordEncoder();
+        memberService = new MemberService(memberRepository,
+                new FakeMailSender(),
+                new FakeVerificationCodeRepository(),
+                passwordEncoder);
+        loginService = new LoginService(memberRepository, passwordEncoder);
     }
 
     @Test
@@ -67,6 +73,7 @@ class LoginServiceTest {
         Long memberId = memberService.join("apple", "1234", "apple@example.com", "banana");
         memberService.verify(memberId, FakeMailSender.SEND_MESSAGE);
         Member findMember = memberRepository.findById(memberId).get();
+
         Member loginMember = loginService.login("apple", "1234");
 
         assertThat(findMember.getVerification()).isEqualTo(COMPLETE);
