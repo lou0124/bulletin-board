@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import personal.bulletinborad.dto.CommentDto;
 import personal.bulletinborad.dto.PostDto;
 import personal.bulletinborad.dto.PostListDto;
+import personal.bulletinborad.entity.Comment;
 import personal.bulletinborad.entity.Member;
 import personal.bulletinborad.entity.Post;
 import personal.bulletinborad.infrastructure.CommentRepository;
@@ -36,7 +37,15 @@ public class PostService {
 
         PageRequest pageRequest = PageRequest.of( page - 1, 10);
         Page<CommentDto> comments = commentRepository.findByPost(pageRequest, post)
-                .map(CommentDto::new);
+                .map(CommentDto::createCommentDto);
+
+        for (CommentDto comment : comments) {
+            System.out.println("parent = " + comment.getId());
+            for (CommentDto commentDto : comment.getReplies()) {
+                System.out.println("child= " + commentDto.getId());
+            }
+        }
+
         return new PostDto(post, comments);
     }
 
