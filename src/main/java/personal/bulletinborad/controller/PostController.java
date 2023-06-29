@@ -1,11 +1,13 @@
 package personal.bulletinborad.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import personal.bulletinborad.dto.PostDto;
 import personal.bulletinborad.dto.PostListDto;
@@ -58,11 +60,19 @@ public class PostController {
     }
 
     @PostMapping("/add")
-    public String write(@ModelAttribute PostForm form, HttpServletRequest request) {
+    public String write(@Valid @ModelAttribute PostForm form,
+                        BindingResult bindingResult,
+                        HttpServletRequest request) {
+
         Member member = (Member) getLoginMember(request);
         if (member == null) {
             return "redirect:/login";
         }
+
+        if (bindingResult.hasErrors()) {
+            return "posts/postForm";
+        }
+
         postService.write(member, form.getTitle(), form.getContent());
         return "redirect:/posts";
     }
