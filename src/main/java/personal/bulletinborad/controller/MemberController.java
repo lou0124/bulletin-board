@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import personal.bulletinborad.controller.Util.LoginMemberGetter;
 import personal.bulletinborad.controller.form.MemberForm;
 import personal.bulletinborad.exception.NotMatchedPasswordException;
 import personal.bulletinborad.service.LoginService;
@@ -13,6 +14,7 @@ import personal.bulletinborad.service.MemberService;
 
 import static personal.bulletinborad.controller.AttributeNameConst.EXCEPTION_MESSAGE_KEY;
 import static personal.bulletinborad.controller.AttributeNameConst.MEMBER_FORM_KEY;
+import static personal.bulletinborad.controller.Util.LoginMemberGetter.*;
 
 @Slf4j
 @Controller
@@ -39,7 +41,11 @@ public class MemberController {
     }
 
     @GetMapping("/verify/{memberId}")
-    public String verifyForm(@PathVariable String memberId) {
+    public String verifyForm(@PathVariable String memberId, HttpServletRequest request) {
+        if (getLoginMember(request) == null) {
+            return "redirect:/posts";
+        }
+
         return "members/verifyMemberForm";
     }
 
