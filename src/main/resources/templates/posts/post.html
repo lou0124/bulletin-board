@@ -83,7 +83,8 @@
                             <div>
                                 <textarea class="form-control"
                                           name="content"
-                                          rows="2" required
+                                          rows="2"
+                                          required
                                           th:placeholder="${nickname == null ? '로그인은 필수입니다.' : '댓글을 입력하세요.'}"></textarea>
                             </div>
                             <br>
@@ -158,6 +159,7 @@
                               id="content"
                               name="content"
                               rows="3"
+                              required
                               th:placeholder="${nickname == null ? '로그인은 필수입니다.' : '댓글을 입력하세요.'}"></textarea>
                 </div>
                 <div class="text-center">
