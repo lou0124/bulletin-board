@@ -2,9 +2,12 @@ package personal.bulletinborad.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -29,9 +32,16 @@ public class LoginController {
     }
 
     @PostMapping("/login")
-    public String login(@ModelAttribute LoginForm form,
+    public String login(@Valid @ModelAttribute LoginForm form,
+                        BindingResult bindingResult,
                         @RequestParam(defaultValue = "/") String redirectPath,
-                        HttpServletRequest request) {
+                        HttpServletRequest request
+                        ) {
+
+        if (bindingResult.hasErrors()) {
+            return "login/loginForm";
+        }
+
         Member member = loginService.login(form.getLoginId(), form.getPassword());
 
         HttpSession session = request.getSession();
