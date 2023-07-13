@@ -1,4 +1,4 @@
-package personal.bulletinborad.controller.Util;
+package personal.bulletinborad.controller.util;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;

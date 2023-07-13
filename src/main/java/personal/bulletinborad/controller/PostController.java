@@ -15,7 +15,7 @@ import personal.bulletinborad.controller.form.PostForm;
 import personal.bulletinborad.entity.Member;
 import personal.bulletinborad.service.PostService;
 
-import static personal.bulletinborad.controller.Util.LoginMemberGetter.getLoginMember;
+import static personal.bulletinborad.controller.util.LoginMemberGetter.getLoginMember;
 
 @Slf4j
 @Controller

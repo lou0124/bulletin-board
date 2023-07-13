@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import personal.bulletinborad.entity.Member;
 import personal.bulletinborad.service.CommentService;
 
-import static personal.bulletinborad.controller.Util.LoginMemberGetter.*;
+import static personal.bulletinborad.controller.util.LoginMemberGetter.*;
 
 @Controller
 @RequiredArgsConstructor
