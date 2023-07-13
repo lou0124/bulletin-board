@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>인증 화면</title>
+    <link th:href="@{/css/bootstrap.min.css}"
+          href="../css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .container {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+    </style>
+    <script th:inline="javascript">
+        function startTimer() {
+            let minutes = 5;
+            let seconds = 0;
+            let timerElement = document.getElementById("timer");
+
+            let countdown = setInterval(function() {
+                if (seconds === 0) {
+                    if (minutes === 0) {
+                        clearInterval(countdown);
+                        timerElement.innerHTML = "인증 코드가 만료되었습니다.";
+                        // 5분이 지나면 알림창 띄우고 페이지 이동
+                        setTimeout(function() {
+                            alert("인증 코드가 만료되었습니다.");
+                            window.location.href = "/posts";
+                        }, 3000); // 3초 후에 알림창 띄우고 페이지 이동
+                    } else {
+                        minutes--;
+                        seconds = 59;
+                    }
+                } else {
+                    seconds--;
+                }
+
+                timerElement.innerHTML = minutes + "분 " + seconds + "초";
+            }, 1000);
+        }
+    </script>
+</head>
+<body onload="startTimer()">
+<div class="container">
+    <h3 class="text-center">5분 후에 인증코드가 만료됩니다.</h3>
+    <div id="timer" class="text-center"></div>
+
+    <form action="" th:accept method="post">
+        <div class="form-group">
+            <label for="code">인증 코드</label>
+            <input type="text" class="form-control" id="code" name="code" placeholder="인증 코드를 입력하세요">
+        </div>
+        <div class="form-group text-center">
+            <button type="submit" class="btn btn-primary">입력 완료</button>
+        </div>
+        <span th:if="${message != null}" th:text="${message}"></span>
+    </form>
+</div>
+</body>
+</html>

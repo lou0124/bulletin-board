@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>게시글 등록</title>
+    <link th:href="@{/css/bootstrap.min.css}"
+          href="../css/bootstrap.min.css" rel="stylesheet">
+    <link th:href="@{/css/fieldError.css}"
+          href="../css/fieldError.css" rel="stylesheet">
+    <style>
+        .container {
+            margin-top: 50px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        textarea {
+            height: 300px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <form action="" th:action th:object="${postForm}" method="post">
+        <div class="form-group">
+            <label for="title" class="form-label">제목</label>
+            <input type="text" class="form-control" id="title" th:field="*{title}" th:errorclass="field-error">
+            <span th:errors="*{title}" class="field-error"></span>
+        </div>
+        <div class="form-group">
+            <label for="content" class="form-label">제목</label>
+            <textarea id="content" class="form-control" th:field="*{content}" style="white-space: pre-wrap;" th:errorclass="field-error"></textarea>
+            <span th:errors="*{content}" class="field-error"></span>
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary">작성 완료</button>
+            <a href="/posts" class="btn btn-secondary">취소</a>
+        </div>
+    </form>
+</div>
+</body>
+</html>

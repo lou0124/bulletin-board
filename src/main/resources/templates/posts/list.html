@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <link th:href="@{/css/bootstrap.min.css}"
+          href="../css/bootstrap.min.css" rel="stylesheet">
+    <title>게시글 목록</title>
+    <style>
+        .container-center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+        .pagination {
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+        .container-title {
+            text-align: center;
+            margin-top: 50px;
+            margin-bottom: 20px;
+        }
+        .post-link {
+            color: black;
+            text-decoration: none;
+        }
+        .post-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+    <script>
+        window.addEventListener('DOMContentLoaded', (event) => {
+            const loginButton = document.getElementById('loginButton');
+            const signupButton = document.getElementById('signupButton');
+            const logoutForm = document.getElementById('logoutForm');
+
+            toggleButtons();
+
+            function toggleButtons() {
+                const isLoggedIn = document.getElementById('nickname') !== null;
+                loginButton.style.display = isLoggedIn ? 'none' : 'block';
+                signupButton.style.display = isLoggedIn ? 'none' : 'block';
+                logoutForm.style.display = isLoggedIn ? 'block' : 'none';
+            }
+        });
+    </script>
+</head>
+<body>
+
+<h1 class="container-title">게 시 판</h1>
+
+<div th:insert="~{login/loginStatus}"></div>
+
+<div class="container container-center">
+    <table class="table">
+        <thead>
+        <thead>
+        <tr>
+            <th style="width: 5%;">글번호</th>
+            <th style="width: 60%;">제목</th>
+            <th style="width: 15%;">닉네임</th>
+            <th style="width: 20%;">작성일</th>
+        </tr>
+        </thead>
+        </thead>
+        <tbody>
+        <tr th:each="post : ${posts}">
+            <td th:text="${post.id}">글번호</td>
+            <td><a href="posts.html" th:href="@{/posts/{postId}(postId=${post.id})}" th:text="${post.title}" class="post-link fw-bolder">제목</a></td>
+            <td th:text="${post.writer}">닉네임</td>
+            <td th:text="${post.writtenDate}">작성일</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <nav style="text-align: center;">
+        <ul class="pagination"
+            th:with="start=${T(java.lang.Math).floor(posts.number/10)*10 + 1},
+                last=(${start + 9 < posts.totalPages ? start + 9 : posts.totalPages})">
+            <li th:class="page-item">
+                <a th:href="@{/posts(page=1)}" aria-label="First" th:class="page-link">
+                    <span aria-hidden="true">First</span>
+                </a>
+            </li>
+            <li th:class="${posts.first} ? 'disabled page-item' : 'page-item'">
+                <a th:href="${posts.first} ? '#' : @{/posts(page=${posts.number})}" aria-label="Previous" th:class="page-link">
+                    <span aria-hidden="true">&lt;</span>
+                </a>
+            </li>
+
+            <li th:each="page: ${#numbers.sequence(start, last)}" th:class="${page == posts.number + 1} ? 'active page-item' : 'page-item'">
+                <a th:text="${page}" th:href="@{/posts(page=${page})}" class="page-link" l></a>
+            </li>
+
+            <li th:class="${posts.last} ? 'disabled page-item' : 'page-item'">
+                <a th:href="${posts.last} ? '#' : @{/posts(page=${posts.number + 2})}" aria-label="Next" th:class="page-link">
+                    <span aria-hidden="true">&gt;</span>
+                </a>
+            </li>
+
+            <li th:class="page-item">
+                <a th:href="@{/posts(page=${posts.totalPages})}" aria-label="Last" th:class="page-link">
+                    <span aria-hidden="true">Last</span>
+                </a>
+            </li>
+        </ul>
+        <script th:inline="javascript">
+            function checkLogin() {
+                const nickname = /*[[${nickname}]]*/ null;
+                if (nickname == null) {
+                    alert('로그인이 필요합니다.');
+                } else {
+                    location.href = '/posts/add';
+                }
+            }
+        </script>
+        <div class="text-right">
+            <button type="button" id="writeButton" class="btn btn-primary" onclick="checkLogin()">글쓰기</button>
+        </div>
+    </nav>
+</div>
+</body>
+</html>

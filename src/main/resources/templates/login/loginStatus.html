@@ -1,0 +1,41 @@
+<style>
+  .container-top-right {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+  }
+  .btn {
+    margin-bottom: 10px;
+    margin-right: 10px;
+  }
+</style>
+<script>
+  function redirectToLogin(loginUrl) {
+    const currentPath = window.location.pathname;
+    const redirectUrl = loginUrl + '?redirectPath=' + currentPath;
+    location.href = redirectUrl;
+  }
+</script>
+<div class="container-top-right">
+  <button type="button" class="btn btn-success btn-block" th:if="${nickname == null}" th:onclick="|redirectToLogin('@{/login}')|">
+    로그인
+  </button>
+  <button type="button" class="btn btn-primary btn-block" th:if="${nickname == null}" th:onclick="|redirectToLogin('@{/members/add}')|">
+    회원 가입
+  </button>
+</div>
+
+<div class="container-top-right">
+  <div class="d-flex align-items-center">
+    <span th:if="${nickname != null}" style="margin-right: 10px;">
+        <span th:text="${nickname}" style="font-weight: bold;"></span>
+        <span>님 안녕하세요!</span>
+    </span>
+    <button type="button" class="btn btn-secondary btn-sm" th:if="${nickname != null}" th:onclick="|redirectToLogin('@{/logout}')|">
+      로그아웃
+    </button>
+  </div>
+</div>
